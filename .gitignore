@@ -1,0 +1,7 @@
+*.csproj
+*.sln
+*.userprefs
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/

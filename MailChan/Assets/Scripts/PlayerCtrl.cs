@@ -116,6 +116,7 @@ public class PlayerCtrl : MonoBehaviour {
 								this.transform.rigidbody2D.gravityScale = 0;
 								//スプライト非表示
 								this.transform.renderer.enabled = false;
+								this.gameObject.layer = LayerMask.NameToLayer ("PlayerThrough");
 						} else {
 								//無敵時間発生
 								StartCoroutine ("InvincibleTime");
@@ -131,6 +132,7 @@ public class PlayerCtrl : MonoBehaviour {
 		IEnumerator InvincibleTime(){
 				int count = 0;
 				hitRenderer.transform.position = this.transform.position; 
+				this.gameObject.layer = LayerMask.NameToLayer ("PlayerThrough");
 				//ダメージエフェクト表示
 				for (count = 0; count < 10; count++) {
 						hitRenderer.renderer.enabled = (count % 2 == 0 ? true : false);
@@ -145,6 +147,7 @@ public class PlayerCtrl : MonoBehaviour {
 
 				//ダメージを受けるようにする
 				hitFlag = false;
+				this.gameObject.layer = LayerMask.NameToLayer ("Player");
 		}
 
 		//ショット制御--------------------------------------------------------------

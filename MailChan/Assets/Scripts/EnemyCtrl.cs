@@ -26,16 +26,29 @@ public class EnemyCtrl : MonoBehaviour {
 		
 		// Update is called once per frame
 		void Update () {
+				//移動処理
+				Vector2 v = rigidbody2D.velocity;
 				if (moveFlag) {
-						transform.position = new Vector3 (transform.position.x + moveSpeed * (faceRight ? 1 : -1),
-															transform.position.y,
-															transform.position.z);
+						v.x = moveSpeed * (faceRight ? 1 : -1);
 				}
+
+				rigidbody2D.velocity = v;
+
+				//向き変更
+				setFaceRight ();
+
 				//アニメーション用フラグを設定
 				GetComponent<Animator> ().SetBool ("animeFlag", animeFlag);
 		}
 
 		//行動制御---------------------------------------------------------------------
+		//tenp
+		IEnumerator Pattern00(){
+				while (true) {
+						yield return new WaitForSeconds (1);
+				}
+		}
+
 		IEnumerator Pattern01(){
 				while (true) {
 						yield return new WaitForSeconds (3);
@@ -68,7 +81,7 @@ public class EnemyCtrl : MonoBehaviour {
 						//攻撃開始
 						animeFlag = true;
 						yield return new WaitForSeconds (1);
-						setFaceRight ();
+						LockPlayer ();
 						moveFlag = true;
 						guardFlag = false;
 						Vector3 v3 = this.transform.position;
@@ -83,7 +96,42 @@ public class EnemyCtrl : MonoBehaviour {
 				}
 		}
 
-		//ダメージ制御-------------------------------------------------------------
+		//ポスト
+		IEnumerator Pattern03(){
+				int counter = 4;	//ガード時間
+				guardFlag = true;
+
+				while (true) {
+						yield return new WaitForSeconds (counter);
+
+						//攻撃開始
+						animeFlag = true;
+						yield return new WaitForSeconds (40 / 60f);
+						LockPlayer ();
+						guardFlag = false;
+						Vector3 v3 = this.transform.position;
+						GameObject bulletCtrl = Instantiate (bullet, v3, this.transform.localRotation) as GameObject;
+						Bullet b = bulletCtrl.GetComponent<Bullet> ();
+						b.BulletCtrl (1, faceRight);
+						yield return new WaitForSeconds (45/60f);
+						guardFlag = true;
+						animeFlag = false;
+				}
+		}
+
+		//ペリカン
+		IEnumerator Pattern04(){
+
+				while (true) {
+						yield return new WaitForSeconds (1);
+				}
+		}
+
+
+
+		//共通処理----------------------------------------------------------------------
+
+		//ダメージ制御
 		public void Damage(int damage){
 				if (!guardFlag) {
 						lifePoint -= damage;
@@ -100,16 +148,21 @@ public class EnemyCtrl : MonoBehaviour {
 				}
 		}
 
-		//共通処理----------------------------------------------------------------------
-
-		//向きチェック
-		void setFaceRight(){
+		//プレイヤーの方を見る
+		void LockPlayer(){
 				GameObject target = GameObject.Find ("Player");
 				if (target.transform.position.x > this.transform.position.x) {
 						faceRight = true;
-						this.transform.rotation = new Quaternion(0,180,0,0); 
 				} else {
 						faceRight = false;
+				}
+		}
+
+		//向き変更
+		void setFaceRight(){
+				if (faceRight) {
+						this.transform.rotation = new Quaternion(0,180,0,0); 
+				} else {
 						this.transform.rotation = new Quaternion(0,0,0,0); 
 				}
 		}

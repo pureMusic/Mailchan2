@@ -20,6 +20,11 @@ public class PlayerCtrl : MonoBehaviour {
 		private bool hitFlag = false;		//ダメージ判定フラグ
 		public GameObject hitRenderer;		//ダメージスプライト
 		private Vector3 pos;				//座標固定用
+		public float scrollTime = 120f;		//スクロール時間
+		public bool ctrlFlag = true;		//コントロールフラグ
+		private bool ladderFlag = false;	//梯子移動フラグ
+		private bool ladderEnable = false;	//梯子接触フラグ
+		private float ladderPosX = 0;		//掴まる梯子の座標
 
 		void Start(){
 				lifePoint = maxLifePoint;
@@ -29,42 +34,88 @@ public class PlayerCtrl : MonoBehaviour {
 		}
 
 		void Update(){
-				if (lifePoint > 0) {
-						Vector2 v = rigidbody2D.velocity;
-
-						//ジャンプ制御------------------------------------
-
-						//着地
-						if (rigidbody2D.velocity.y == 0 && jumpFlag) {
-								jumpFlag = false;
-
+				if (lifePoint > 0 && ctrlFlag) {
+						//入力情報を取得
+						float x = 0;
+						float y = 0;
+						if (Input.GetKey(KeyCode.W) || Input.GetKey (KeyCode.UpArrow)) {
+								y = 1;
+						} else if (Input.GetKey(KeyCode.S) || Input.GetKey (KeyCode.DownArrow)) {
+								y = -1;
+						}
+						if (Input.GetKey (KeyCode.D) || Input.GetKey (KeyCode.RightArrow)) {
+								x = 1;
+						} else if (Input.GetKey (KeyCode.A) || Input.GetKey (KeyCode.LeftArrow)) {
+								x = -1;
 						}
 
-						//落下
-						if (rigidbody2D.velocity.y < -0.1f) {	//誤差修正のため0ではなく-0.1とする
-								jumpFlag = true;
-						}
+						//梯子移動
+						if (ladderFlag) {
+								//移動-------------------------------------------------
+								transform.position = new Vector3(transform.position.x
+										, transform.position.y + y * 2
+										, transform.position.z);
 
-						//ジャンプボタン押下
-						if (Input.GetKeyDown ("space") && !jumpFlag) {
-								jumpFlag = true;
-								v.y = jumpForce;
+								//梯子を離す
+								if (Input.GetKeyDown (KeyCode.Space)) {
+										ladderEnable = false;
+										ladderFlag = false;
+										rigidbody2D.isKinematic = false;
+								}
+						} 
+
+						//通常時
+						else {
+								Vector2 v = rigidbody2D.velocity;
+
+								//ジャンプ制御------------------------------------
+
+								//落下
+								if (v.y < -0.1f) {	//誤差修正のため0ではなく-0.1とする
+										jumpFlag = true;
+								}
+								//着地
+								if (Mathf.Abs( v.y*100) < 1 && jumpFlag) {
+										jumpFlag = false;
+
+								}
+
+								//ジャンプボタン押下
+								if (Input.GetKeyDown ("space") && !jumpFlag) {
+										jumpFlag = true;
+										v.y = jumpForce;
+								}
+								//ジャンプボタンを離す
+								if (Input.GetKeyUp ("space") && jumpFlag && v.y > 0) {
+										v.y = 0;
+								}
+
+
+			
+								//横移動-------------------------------------------------
+								if (x == 0)
+										walkFlag = false;
+								else
+										walkFlag = true;
+						
+								v.x = x * speed;
+								rigidbody2D.velocity = v;
+
+								//梯子移動-----------------------------------------------
+								if (ladderEnable && y != 0) {
+										ladderFlag = true;
+										transform.rigidbody2D.velocity = new Vector2 (0, 0);
+										transform.rigidbody2D.isKinematic = true;
+										transform.position = new Vector3 (ladderPosX, transform.position.y, transform.position.z);
+								}
+
+
 						}
-		
-						//横移動-------------------------------------------------
-						float h = Input.GetAxis ("Horizontal");
-						if (h == 0)
-								walkFlag = false;
-						else
-								walkFlag = true;
-					
-						v.x = h * speed;
-						rigidbody2D.velocity = v;
 
 						//右を向いていて、左の入力があったとき、もしくは左を向いていて、右の入力があったとき
-						if ((h > 0 && !facingRight) || (h < 0 && facingRight)) {
+						if ((x > 0 && !facingRight) || (x < 0 && facingRight)) {
 								//右を向いているかどうかを、入力方向をみて決める
-								facingRight = (h > 0);
+								facingRight = (x > 0);
 								//localScale.xを、右を向いているかどうかで更新する
 								transform.localScale = new Vector3 ((facingRight ? 1 : -1), 1, 1);
 						}
@@ -88,13 +139,13 @@ public class PlayerCtrl : MonoBehaviour {
 				}
 
 				//デバッグ---------------------------------------------------
-				//MyDebug ();
+				MyDebug ();
 
 		}
 
 		//デバッグ用
 		void MyDebug(){
-				print ("FPS:" + 1 / Time.deltaTime);
+				//print ("FPS:" + 1 / Time.deltaTime);
 				Debug.Log ("jumpFlag:" + jumpFlag);
 				Debug.Log ("v:" + rigidbody2D.velocity);
 		}
@@ -201,6 +252,12 @@ public class PlayerCtrl : MonoBehaviour {
 						transform.parent = col.gameObject.transform;
 				}
 
+				//梯子フラグを設定
+				if (col.gameObject.tag == "Ladder") {
+						ladderEnable = true;
+						ladderPosX = col.gameObject.transform.position.x;
+				}
+
 		}
 
 		//離れた時の処理
@@ -209,10 +266,50 @@ public class PlayerCtrl : MonoBehaviour {
 				if(transform.parent != null && col.gameObject.tag == "MoveBlock"){
 						transform.parent = null;
 				}
+
+				//梯子から離れる
+				if (col.gameObject.tag == "Ladder") {
+						ladderEnable = false;
+						ladderFlag = false;
+						rigidbody2D.isKinematic = false;
+				}
 		}
 
 		//接触中の処理
 		void OnTriggerStay2D(Collider2D col){
+
+		}
+
+		//スクロール制御--------------------------------------------------------------------------
+		IEnumerator ScrollX(){
+				int i = 0;
+				rigidbody2D.velocity = new Vector2 (0, 0);
+				rigidbody2D.isKinematic = true;
+				Vector3 v = transform.position;
+				for(i = 0; i < (int)scrollTime; i++){
+						v.x += 64 / scrollTime;
+						transform.position = v;
+						yield return new WaitForSeconds(1/scrollTime);
+
+				}
+				ctrlFlag = true;
+				rigidbody2D.isKinematic = false;
+
+		}
+
+		IEnumerator ScrollY(){
+				int i = 0;
+				rigidbody2D.velocity = new Vector2 (0, 0);
+				rigidbody2D.isKinematic = true;
+				Vector3 v = transform.position;
+				for(i = 0; i < (int)scrollTime; i++){
+						v.y += 96 / scrollTime;
+						transform.position = v;
+						yield return new WaitForSeconds(1/scrollTime);
+
+				}
+				ctrlFlag = true;
+				rigidbody2D.isKinematic = false;
 
 		}
 

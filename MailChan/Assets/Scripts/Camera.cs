@@ -2,48 +2,66 @@
 using System.Collections;
 
 public class Camera : MonoBehaviour {
+
 		public GameObject player;
-		private float cameraPosZ = -10f;
-		public float screenNumX = 3;
-		public float screenNumY = 1;
+		public float screenNumX = 1;
 		private float screenSizeX = 1024f;
 		private float screenSizeY = 576f;
-		public bool scrollXFlag = true;
-		public bool scrollYFlag = false;
 		public Vector2 scrollStartPos;
+		public bool ctrlFlag = true;
+		public float scrollTime = 120f;
 
 		// Use this for initialization
 		void Start () {
 				scrollStartPos = new Vector2 (0, 0);
 		}
-		
+
 		// Update is called once per frame
 		void Update () {
-				int xFlag = (scrollXFlag ? 1 : 0);
-				int yFlag = (scrollYFlag ? 1 : 0);
 
-				//カメラ移動（追従）
-				transform.position = new Vector3 (xFlag * player.transform.position.x + scrollStartPos.x
-												, yFlag * player.transform.position.y + scrollStartPos.y
-												, cameraPosZ);
+				if (ctrlFlag) {
+						//カメラ移動（追従）
+						Vector3 v = transform.position;
+						v.x = player.transform.position.x;
 
-				//見切れ防止
-				float posX = (screenNumX - 1) * screenSizeX;
-				float posY = (screenNumY - 1) * screenSizeY;
+						//見切れ防止
+						float posX = (screenNumX - 1) * screenSizeX + scrollStartPos.x;
 
-				if (transform.position.x < 0) {
-						posX = 0;
-				} else if (transform.position.x < posX) {
-						posX = player.transform.position.x;
+						if (v.x < scrollStartPos.x) {
+								v.x = scrollStartPos.x;
+						} else if (v.x > (screenNumX - 1) * screenSizeX + scrollStartPos.x) {
+								v.x = (screenNumX - 1) * screenSizeX + scrollStartPos.x;
+						}
+
+						transform.position = v;
 				}
+		}
 
-				if (transform.position.y < 0) {
-						posY = 0;
-				} else if (transform.position.y < posY) {
-						posY = player.transform.position.y;
+		IEnumerator ScrollX(){
+				int i = 0;
+				Vector3 v = transform.position;
+				for(i = 0; i < (int)scrollTime; i++){
+						v.x += screenSizeX / scrollTime;
+						transform.position = v;
+						yield return new WaitForSeconds(1/scrollTime);
+
 				}
-				transform.position = new Vector3 (xFlag * posX + scrollStartPos.x
-												, yFlag * posY + scrollStartPos.y
-												, cameraPosZ);
+				scrollStartPos = new Vector2 (transform.position.x, transform.position.y);
+				ctrlFlag = true;
+
+		}
+
+		IEnumerator ScrollY(){
+				int i = 0;
+				Vector3 v = transform.position;
+				for(i = 0; i < (int)scrollTime; i++){
+						v.y += screenSizeY / scrollTime;
+						transform.position = v;
+						yield return new WaitForSeconds(1/scrollTime);
+
+				}
+				scrollStartPos = new Vector2 (transform.position.x, transform.position.y);
+				ctrlFlag = true;
+
 		}
 }

@@ -25,16 +25,25 @@ public class PlayerCtrl : MonoBehaviour {
 		private bool ladderFlag = false;	//梯子移動フラグ
 		private bool ladderEnable = false;	//梯子接触フラグ
 		private float ladderPosX = 0;		//掴まる梯子の座標
+		private Vector3 restartPos;			//スタート地点
+		private bool warpFlag = true;		//ワープフラグ
 
 		void Start(){
 				lifePoint = maxLifePoint;
 				this.transform.rigidbody2D.gravityScale = 64;
 				hitRenderer = Instantiate (hitRenderer, this.transform.position, this.transform.rotation) as GameObject;
 				hitRenderer.transform.renderer.enabled = false;
+				restartPos = new Vector3 (0, 0, 0);
 		}
 
 		void Update(){
-				if (lifePoint > 0 && ctrlFlag) {
+				if (Input.GetKeyDown (KeyCode.Escape))
+						Application.LoadLevel (0);
+				if (warpFlag) {
+						transform.position = new Vector3 (transform.position.x
+														, transform.position.y - 8
+														, transform.position.z);
+				}else if (lifePoint > 0 && ctrlFlag) {
 						//入力情報を取得
 						float x = 0;
 						float y = 0;
@@ -312,7 +321,21 @@ public class PlayerCtrl : MonoBehaviour {
 				rigidbody2D.isKinematic = false;
 
 		}
-
-		//ゲッタ・セッタ---------------------------------------------------------------
 	
+
+		//登場ワープ制御------------------------------------------------------------
+		//スタート地点を更新
+		public void setRestartPos(Vector3 vec){
+				restartPos = vec;
+		}
+
+		//ワープフラグセッタ
+		public void setWarpFlag(bool flag){
+				warpFlag = flag;
+		}
+		//ワープフラグゲッタ
+		public bool getWarpFlag(){
+				return warpFlag;
+		}
+
 }

@@ -3,13 +3,15 @@ using System.Collections;
 
 public class Camera : MonoBehaviour {
 
-		public GameObject player;
-		public float screenNumX = 1;
-		private float screenSizeX = 1024f;
+		public GameObject player;			//プレイヤー
+		public float screenNumX = 1;		//現在のスクロール可能画面数
+		private float screenSizeX = 1024f;	//画面サイズ
 		private float screenSizeY = 576f;
-		public Vector2 scrollStartPos;
-		public bool ctrlFlag = true;
-		public float scrollTime = 120f;
+		public Vector2 scrollStartPos;		//スクロール開始位置
+		public bool ctrlFlag = true;		//スクロール制御フラグ
+		public float scrollTime = 120f;		//スクロール時間
+		private Vector2 restartPos;			//スタート地点
+		private float restartNumX = 0;
 
 		// Use this for initialization
 		void Start () {
@@ -37,6 +39,7 @@ public class Camera : MonoBehaviour {
 				}
 		}
 
+		//横スクロール
 		IEnumerator ScrollX(){
 				int i = 0;
 				Vector3 v = transform.position;
@@ -51,6 +54,7 @@ public class Camera : MonoBehaviour {
 
 		}
 
+		//縦スクロール
 		IEnumerator ScrollY(){
 				int i = 0;
 				Vector3 v = transform.position;
@@ -63,5 +67,11 @@ public class Camera : MonoBehaviour {
 				scrollStartPos = new Vector2 (transform.position.x, transform.position.y);
 				ctrlFlag = true;
 
+		}
+
+		//スタート地点設定
+		public void setRestartPos(Vector2 vec, float x){
+				restartPos = vec;
+				restartNumX = x;
 		}
 }

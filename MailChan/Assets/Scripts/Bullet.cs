@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour {
 		void Update () {
 				if (ctrlType == 0) {
 						//回転させる
-						transform.Rotate (0, 0, 90) ;
+						//transform.Rotate (0, 0, 90) ;
 				}
 		}
 

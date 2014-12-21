@@ -3,8 +3,10 @@ using System.Collections;
 using System;
 
 public class PlayerCtrl : MonoBehaviour {
-		public float speed = 196f;			//横移動速度
-		public float jumpForce = 320f;		//ジャンプ力
+		private float screenSizeX = 352f;	//画面サイズ
+		private float screenSizeY = 198f;
+		public float speed = 128f;			//横移動速度
+		public float jumpForce = 256f;		//ジャンプ力
 		public int bulletMaxNum = 3; 		//画面内の弾の最大数
 		private bool facingRight = true;	//向いてる方向
 		bool jumpFlag = false;				//ジャンプフラグ
@@ -17,6 +19,7 @@ public class PlayerCtrl : MonoBehaviour {
 		private float maxChargePoint = 28f;	//最大チャージポイント
 		private float chargePoint = 0;		//チャージ量
 		public float chargeTime = 2f;		//チャージにかかる秒数
+		private int shotCounter = 0;		//ショットモーション制御カウンター
 		private bool hitFlag = false;		//ダメージ判定フラグ
 		public GameObject hitRenderer;		//ダメージスプライト
 		private Vector3 pos;				//座標固定用
@@ -29,10 +32,17 @@ public class PlayerCtrl : MonoBehaviour {
 		private bool warpFlag = true;		//ワープフラグ
 
 		void Start(){
+				//ライフの設定
 				lifePoint = maxLifePoint;
+
+				//重力値の設定
 				this.transform.rigidbody2D.gravityScale = 64;
+
+				//ダメージエフェクトの設定
 				hitRenderer = Instantiate (hitRenderer, this.transform.position, this.transform.rotation) as GameObject;
 				hitRenderer.transform.renderer.enabled = false;
+
+				//スタート地点の設定
 				restartPos = new Vector3 (0, 0, 0);
 		}
 
@@ -62,7 +72,7 @@ public class PlayerCtrl : MonoBehaviour {
 						if (ladderFlag) {
 								//移動-------------------------------------------------
 								transform.position = new Vector3(transform.position.x
-										, transform.position.y + y * 2
+										, transform.position.y + y * 1
 										, transform.position.z);
 
 								//梯子を離す
@@ -131,7 +141,9 @@ public class PlayerCtrl : MonoBehaviour {
 
 						//ショット制御---------------------------------------------------------------
 						if (Input.GetKeyDown ("return")) {
-								ShotCtrl ();
+								if (GameObject.Find("BulletList").transform.childCount < bulletMaxNum) {
+										ShotCtrl ();
+								}
 						}
 						ChargeCheck ();
 						if (Input.GetKeyUp ("return") && chargePoint > maxChargePoint / 3) {
@@ -140,15 +152,27 @@ public class PlayerCtrl : MonoBehaviour {
 						if (!Input.GetKey ("return")) {
 								chargePoint = 0;
 						}
-
+						//ショットモーション制御
+						if (shotFlag) {
+								if (shotCounter++ > 20) {
+										shotFlag = false;
+										shotCounter = 0;
+								}
+						}
 
 						//アニメーション用フラグを設定
+						float walkShotFlag = (shotFlag ? 1.0f : 0f);
 						GetComponent<Animator> ().SetBool ("walkFlag", walkFlag);
 						GetComponent<Animator> ().SetBool ("shotFlag", shotFlag);
+						GetComponent<Animator> ().SetFloat ("walkshot", walkShotFlag);
+						GetComponent<Animator> ().SetFloat ("jumpSpeed", transform.rigidbody2D.velocity.y);
+						GetComponent<Animator> ().SetBool ("jumpFlag", jumpFlag);
+						GetComponent<Animator> ().SetBool ("ladderFlag", ladderFlag);
+						GetComponent<Animator> ().SetFloat ("ladderPos", (int)Mathf.Abs(transform.position.y + screenSizeY / 2) / 8 % 2);
 				}
 
 				//デバッグ---------------------------------------------------
-				MyDebug ();
+				//MyDebug ();
 
 		}
 
@@ -215,7 +239,9 @@ public class PlayerCtrl : MonoBehaviour {
 		//ショットコントロール
 		void ShotCtrl(){
 				Vector3 v3 = transform.position;
-				v3.x += 38 * getFacingRight ();
+
+				//ショットの生成
+				v3.x += 20 * getFacingRight ();
 				GameObject bulletCtrl;
 
 				if (chargePoint != maxChargePoint) {
@@ -225,15 +251,14 @@ public class PlayerCtrl : MonoBehaviour {
 				}
 				Bullet b = bulletCtrl.GetComponent<Bullet> ();
 				b.BulletCtrl (0, facingRight);
+
+				//ショットを管理用リストの子に設定
+				b.transform.parent = GameObject.Find("BulletList").transform;
+
+				//ショットカウンターをリセット
+				shotCounter = 0;
+
 				shotFlag = true;
-
-				StartCoroutine ("ShotCheck");
-		}
-
-		//ショットモーション制御
-		IEnumerator ShotCheck(){
-				yield return new WaitForSeconds (0.4f);
-				shotFlag = false;
 		}
 
 		//チャージ時間管理

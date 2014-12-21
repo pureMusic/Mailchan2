@@ -5,8 +5,8 @@ public class Camera : MonoBehaviour {
 
 		public GameObject player;			//プレイヤー
 		public float screenNumX = 1;		//現在のスクロール可能画面数
-		private float screenSizeX = 1024f;	//画面サイズ
-		private float screenSizeY = 576f;
+		private float screenSizeX = 352f;	//画面サイズ
+		private float screenSizeY = 198f;
 		public Vector2 scrollStartPos;		//スクロール開始位置
 		public bool ctrlFlag = true;		//スクロール制御フラグ
 		public float scrollTime = 120f;		//スクロール時間

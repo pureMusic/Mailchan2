@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c9e1fad80fafbe3488053cba413817e9
+guid: 984f2b3b213e9cf4ea8023f508d6e200
 TextureImporter:
   fileIDToRecycleName:
     21300000: enemy02_0
@@ -9,7 +9,6 @@ TextureImporter:
     21300008: enemy02_4
     21300010: enemy02_5
     21300012: enemy02_6
-    21300014: enemy02_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -29,7 +28,7 @@ TextureImporter:
   grayScaleToAlpha: 0
   generateCubemap: 0
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: -3
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
@@ -115,16 +114,6 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 128
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: enemy02_7
-      rect:
-        serializedVersion: 2
-        x: 192
         y: 0
         width: 64
         height: 64

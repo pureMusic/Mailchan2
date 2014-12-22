@@ -1,11 +1,10 @@
 fileFormatVersion: 2
-guid: 62208db4e0c45b643971a0d560bcf834
+guid: 2cab8b7645844d248a2a66861130fe4b
 TextureImporter:
   fileIDToRecycleName:
-    21300000: ScrollMode_0
-    21300002: ScrollMode_1
-    21300004: ScrollMode_2
-    21300006: ScrollMode_3
+    21300000: CtrlTips_0
+    21300002: CtrlTips_1
+    21300004: CtrlTips_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -25,7 +24,7 @@ TextureImporter:
   grayScaleToAlpha: 0
   generateCubemap: 0
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: -3
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
@@ -47,43 +46,33 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: ScrollMode_0
+    - name: CtrlTips_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: ScrollMode_1
+    - name: CtrlTips_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: CtrlTips_2
       rect:
         serializedVersion: 2
         x: 32
         y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: ScrollMode_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: ScrollMode_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 32
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -15,7 +15,7 @@ public class DamageBlock : MonoBehaviour {
 		}
 
 		//接触時の処理
-		void OnTriggerEnter2D(Collider2D col){
+		void OnTriggerStay2D(Collider2D col){
 				//ダメージ処理
 				if (col.gameObject.tag == "Player") {
 						PlayerCtrl player = col.GetComponent<PlayerCtrl>();

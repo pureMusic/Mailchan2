@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ace8955894f4fc349952cc826eed95a0
+guid: 7a36fc6644b50e243b84a394e88e1168
 TextureImporter:
   fileIDToRecycleName:
     21300000: enemy03_0
@@ -7,9 +7,6 @@ TextureImporter:
     21300004: enemy03_2
     21300006: enemy03_3
     21300008: enemy03_4
-    21300010: enemy03_5
-    21300012: enemy03_6
-    21300014: enemy03_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -29,10 +26,10 @@ TextureImporter:
   grayScaleToAlpha: 0
   generateCubemap: 0
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: -3
   maxTextureSize: 1024
   textureSettings:
-    filterMode: 1
+    filterMode: -1
     aniso: 1
     mipBias: -1
     wrapMode: 1
@@ -95,36 +92,6 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: enemy03_5
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: enemy03_6
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: enemy03_7
-      rect:
-        serializedVersion: 2
-        x: 192
         y: 0
         width: 64
         height: 64

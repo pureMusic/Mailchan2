@@ -27,7 +27,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 120, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -84,8 +84,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2255ca38177a474c8f06e786ca85d11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 128
-  jumpForce: 256
+  speed: 64
+  jumpForce: 240
   bulletMaxNum: 3
   nBullet: {fileID: 100000, guid: a40255b7607b44a4b8be7ea5c60141d5, type: 2}
   cBullet: {fileID: 100002, guid: fbe70b91591cbe24f94b88b8db503999, type: 2}

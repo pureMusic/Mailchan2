@@ -3,10 +3,8 @@ using System.Collections;
 using System;
 
 public class PlayerCtrl : MonoBehaviour {
-		private float screenSizeX = 352f;	//画面サイズ
-		private float screenSizeY = 198f;
-		public float speed = 128f;			//横移動速度
-		public float jumpForce = 256f;		//ジャンプ力
+		public float speed = 64f;			//横移動速度
+		public float jumpForce = 240f;		//ジャンプ力
 		public int bulletMaxNum = 3; 		//画面内の弾の最大数
 		private bool facingRight = true;	//向いてる方向
 		bool jumpFlag = false;				//ジャンプフラグ
@@ -168,7 +166,7 @@ public class PlayerCtrl : MonoBehaviour {
 						GetComponent<Animator> ().SetFloat ("jumpSpeed", transform.rigidbody2D.velocity.y);
 						GetComponent<Animator> ().SetBool ("jumpFlag", jumpFlag);
 						GetComponent<Animator> ().SetBool ("ladderFlag", ladderFlag);
-						GetComponent<Animator> ().SetFloat ("ladderPos", (int)Mathf.Abs(transform.position.y + screenSizeY / 2) / 8 % 2);
+						GetComponent<Animator> ().SetFloat ("ladderPos", (int)Mathf.Abs(transform.position.y + Camera.screenSizeY / 2) / 8 % 2);
 				}
 
 				//デバッグ---------------------------------------------------
@@ -321,7 +319,7 @@ public class PlayerCtrl : MonoBehaviour {
 				rigidbody2D.isKinematic = true;
 				Vector3 v = transform.position;
 				for(i = 0; i < (int)scrollTime; i++){
-						v.x += 64 / scrollTime;
+						v.x += 32 / scrollTime;
 						transform.position = v;
 						yield return new WaitForSeconds(1/scrollTime);
 
@@ -337,7 +335,7 @@ public class PlayerCtrl : MonoBehaviour {
 				rigidbody2D.isKinematic = true;
 				Vector3 v = transform.position;
 				for(i = 0; i < (int)scrollTime; i++){
-						v.y += 96 / scrollTime;
+						v.y += 64 / scrollTime;
 						transform.position = v;
 						yield return new WaitForSeconds(1/scrollTime);
 

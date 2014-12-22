@@ -30,7 +30,8 @@ public class Bullet : MonoBehaviour {
 				}
 				//自機狙い
 				if (bulletType == 1) {
-						GameObject target = GameObject.Find ("Player");
+						//GameObject target = GameObject.FindGameObjectWithTag("Player");
+						GameObject target = GameObject.Find ("Mailchan");
 						targetPos = new Vector2(target.transform.position.x, target.transform.position.y);
 						radian = Mathf.Atan2 (targetPos.y - transform.position.y, targetPos.x - transform.position.x);
 						rigidbody2D.velocity = new Vector2 (bulletSpeed * Mathf.Cos (radian), bulletSpeed * Mathf.Sin (radian));

@@ -77,21 +77,20 @@ public class EnemyCtrl : MonoBehaviour {
 
 				while (true) {
 						yield return new WaitForSeconds (counter);
-
 						//攻撃開始
 						animeFlag = true;
+						guardFlag = false;
 						yield return new WaitForSeconds (1);
 						LockPlayer ();
 						moveFlag = true;
-						guardFlag = false;
 						Vector3 v3 = this.transform.position;
 						GameObject bulletCtrl = Instantiate (bullet, v3, this.transform.localRotation) as GameObject;
 						Bullet b = bulletCtrl.GetComponent<Bullet> ();
 						b.BulletCtrl (1, faceRight);
 						yield return new WaitForSeconds (1);
 						moveFlag = false;
-						guardFlag = true;
 						yield return new WaitForSeconds (1);
+						guardFlag = true;
 						animeFlag = false;
 				}
 		}
@@ -150,7 +149,8 @@ public class EnemyCtrl : MonoBehaviour {
 
 		//プレイヤーの方を見る
 		void LockPlayer(){
-				GameObject target = GameObject.Find ("Player");
+				//GameObject target = GameObject.FindGameObjectWithTag("Player");
+				GameObject target = GameObject.Find ("Mailchan");
 				if (target.transform.position.x > this.transform.position.x) {
 						faceRight = true;
 				} else {

@@ -8,12 +8,12 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400000}
-  - 212: {fileID: 21200000}
-  - 114: {fileID: 11400000}
   - 61: {fileID: 6100000}
+  - 114: {fileID: 11400000}
+  - 212: {fileID: 21200000}
   m_Layer: 0
-  m_Name: Enemy01
-  m_TagString: Enemy
+  m_Name: EnemySpawn
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39,7 +39,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Size: {x: 22, y: 44}
+  m_Size: {x: 1, y: 1}
   m_Center: {x: 0, y: 0}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -49,18 +49,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54d7368161feab04f86a19e38012552e, type: 3}
+  m_Script: {fileID: 11500000, guid: 23352444b99848e41a0842cd7f6c87be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damagePoint: 4
-  enemyType: 01
-  lifePoint: 1
-  defSprite: {fileID: 21300000, guid: 1346bd253cd2ca543b588011ab457fdb, type: 3}
-  moveSprite: {fileID: 21300002, guid: 1346bd253cd2ca543b588011ab457fdb, type: 3}
-  attackSprite: {fileID: 21300002, guid: 1346bd253cd2ca543b588011ab457fdb, type: 3}
-  bullet: {fileID: 100002, guid: ee22a144fac33ce458921c9575e2c6dd, type: 2}
-  faceRight: 0
-  destroy: {fileID: 100000, guid: 02d787408240d6941aca21e768650135, type: 2}
+  EnemyPrefab: {fileID: 100000, guid: 11cf5ede150d5b94c837689d4d2d1233, type: 2}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -79,7 +71,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 1124007295
+  m_SortingLayerID: 1623705927
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1346bd253cd2ca543b588011ab457fdb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

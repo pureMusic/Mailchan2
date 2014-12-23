@@ -58,11 +58,11 @@ TagManager:
     userID: 3
     uniqueID: 458891055
     locked: 0
-  - name: character
-    userID: 4
-    uniqueID: 1124007295
-    locked: 0
   - name: parameter
     userID: 5
     uniqueID: 1623705927
+    locked: 0
+  - name: character
+    userID: 4
+    uniqueID: 1124007295
     locked: 0

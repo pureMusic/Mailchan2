@@ -22,6 +22,16 @@ public class ScrollCtrl : MonoBehaviour {
 						Camera cameraCtrl = camera.GetComponent<Camera> ();
 						PlayerCtrl pCtrl = col.gameObject.GetComponent<PlayerCtrl> ();
 
+						//敵・弾オブジェクトを削除
+						GameObject[] deleteObj = GameObject.FindGameObjectsWithTag ("Enemy");
+						foreach(GameObject obj in deleteObj){
+								Destroy (obj);
+						}
+						deleteObj = GameObject.FindGameObjectsWithTag ("EnemyBullet");
+						foreach(GameObject obj in deleteObj){
+								Destroy (obj);
+						}
+
 						//カメラの制御
 						cameraCtrl.screenNumX = screenNumX;
 						cameraCtrl.ctrlFlag = false;

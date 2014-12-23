@@ -7,15 +7,22 @@ public class Camera : MonoBehaviour {
 		public float screenNumX = 1;		//現在のスクロール可能画面数
 		public static float screenSizeX = 352f;	//画面サイズ
 		public static float screenSizeY = 198f;
-		public Vector2 scrollStartPos;		//スクロール開始位置
+		public Vector3 scrollStartPos;		//スクロール開始位置
 		public bool ctrlFlag = true;		//スクロール制御フラグ
 		public float scrollTime = 120f;		//スクロール時間
-		private Vector2 restartPos;			//スタート地点
+		private Vector3 restartPos;			//スタート地点
 		private float restartNumX = 0;
 
 		// Use this for initialization
 		void Start () {
-				scrollStartPos = new Vector2 (0, 0);
+				scrollStartPos = new Vector3 (0, 0, -10);
+		}
+
+		public void Restart(){
+				screenNumX = restartNumX;
+				scrollStartPos = restartPos;
+				transform.position = scrollStartPos;
+				ctrlFlag = true;
 		}
 
 		// Update is called once per frame
@@ -27,8 +34,6 @@ public class Camera : MonoBehaviour {
 						v.x = player.transform.position.x;
 
 						//見切れ防止
-						float posX = (screenNumX - 1) * screenSizeX + scrollStartPos.x;
-
 						if (v.x < scrollStartPos.x) {
 								v.x = scrollStartPos.x;
 						} else if (v.x > (screenNumX - 1) * screenSizeX + scrollStartPos.x) {
@@ -49,7 +54,7 @@ public class Camera : MonoBehaviour {
 						yield return new WaitForSeconds(1/scrollTime);
 
 				}
-				scrollStartPos = new Vector2 (transform.position.x, transform.position.y);
+				scrollStartPos = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
 				ctrlFlag = true;
 
 		}
@@ -70,7 +75,7 @@ public class Camera : MonoBehaviour {
 		}
 
 		//スタート地点設定
-		public void setRestartPos(Vector2 vec, float x){
+		public void setRestartPos(Vector3 vec, float x){
 				restartPos = vec;
 				restartNumX = x;
 		}

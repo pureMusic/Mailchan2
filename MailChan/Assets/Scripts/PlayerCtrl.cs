@@ -3,38 +3,48 @@ using System.Collections;
 using System;
 
 public class PlayerCtrl : MonoBehaviour {
-		public float speed = 64f;			//横移動速度
-		public float jumpForce = 240f;		//ジャンプ力
-		public int bulletMaxNum = 3; 		//画面内の弾の最大数
+		//固定パラメータ
+		public static float speed = 64f;			//横移動速度
+		public static float jumpForce = 240f;		//ジャンプ力
+		public static int bulletMaxNum = 3; 		//画面内の弾の最大数
+		private int maxLifePoint = 28;		//最大ライフポイント
+		private float maxChargePoint = 28f;	//最大チャージポイント
+		public static float chargeTime = 2f;		//チャージにかかる秒数
+		public static float scrollTime = 120f;		//スクロール時間
+		private int maxPlayerNum = 9;		//最大残機数
+		private float gravity = 64;				//重力
+
+		//現在パラメータ
+		private Vector3 restartPos;			//スタート地点
+		private float ladderPosX = 0;		//掴まる梯子の座標
 		private bool facingRight = true;	//向いてる方向
+		private int lifePoint = 28;			//ライフポイント
+		private float chargePoint = 0;		//チャージ量
+		private int shotCounter = 0;		//ショットモーション制御カウンター
+		public int playerNum = 3;			//残機数(初期値）
+
+		//フラグ
 		bool jumpFlag = false;				//ジャンプフラグ
 		bool walkFlag = false;				//横移動フラグ
 		bool shotFlag = false;				//ショットフラグ
-		public GameObject nBullet;			//通常ショットのプレハブ
-		public GameObject cBullet;			//チャージショットのプレハブ
-		private int maxLifePoint = 28;		//最大ライフポイント
-		private int lifePoint = 28;			//ライフポイント
-		private float maxChargePoint = 28f;	//最大チャージポイント
-		private float chargePoint = 0;		//チャージ量
-		public float chargeTime = 2f;		//チャージにかかる秒数
-		private int shotCounter = 0;		//ショットモーション制御カウンター
 		private bool hitFlag = false;		//ダメージ判定フラグ
-		public GameObject hitRenderer;		//ダメージスプライト
-		private Vector3 pos;				//座標固定用
-		public float scrollTime = 120f;		//スクロール時間
 		public bool ctrlFlag = true;		//コントロールフラグ
 		private bool ladderFlag = false;	//梯子移動フラグ
 		private bool ladderEnable = false;	//梯子接触フラグ
-		private float ladderPosX = 0;		//掴まる梯子の座標
-		private Vector3 restartPos;			//スタート地点
 		private bool warpFlag = true;		//ワープフラグ
+
+		//プレハブ
+		public GameObject nBullet;			//通常ショットのプレハブ
+		public GameObject cBullet;			//チャージショットのプレハブ
+		public GameObject hitRenderer;		//ダメージスプライト
+		public GameObject explode;			//ライフ0時のエフェクトプレハブ
 
 		void Start(){
 				//ライフの設定
 				lifePoint = maxLifePoint;
 
 				//重力値の設定
-				this.transform.rigidbody2D.gravityScale = 64;
+				this.transform.rigidbody2D.gravityScale = gravity;
 
 				//ダメージエフェクトの設定
 				hitRenderer = Instantiate (hitRenderer, this.transform.position, this.transform.rotation) as GameObject;
@@ -42,6 +52,41 @@ public class PlayerCtrl : MonoBehaviour {
 
 				//スタート地点の設定
 				restartPos = new Vector3 (0, 0, 0);
+		}
+
+		public void ReStart(){
+
+				this.transform.rigidbody2D.gravityScale = gravity;
+				//スプライト非表示
+				this.transform.renderer.enabled = true;
+				this.gameObject.layer = LayerMask.NameToLayer ("Player");
+				//ダメージエフェクトの設定
+				hitRenderer.transform.renderer.enabled = false;
+
+				//スタート地点の設定
+				transform.position = restartPos;
+
+				//現在パラメータ
+				facingRight = true;	//向いてる方向
+				transform.localScale = new Vector3 ((facingRight ? 1 : -1), 1, 1);
+				lifePoint = maxLifePoint;			//ライフポイント
+				chargePoint = 0;		//チャージ量
+				shotCounter = 0;		//ショットモーション制御カウンター
+
+				//フラグ
+				jumpFlag = false;				//ジャンプフラグ
+				walkFlag = false;				//横移動フラグ
+				shotFlag = false;				//ショットフラグ
+				hitFlag = false;		//ダメージ判定フラグ
+				ctrlFlag = true;		//コントロールフラグ
+				ladderFlag = false;	//梯子移動フラグ
+				ladderEnable = false;	//梯子接触フラグ
+				warpFlag = true;		//ワープフラグ
+
+				GameObject lifeBar = GameObject.Find ("LifeBar1");
+				Vector2 vec = lifeBar.transform.localScale;
+				vec.y = lifePoint;
+				lifeBar.transform.localScale = vec;
 		}
 
 		void Update(){
@@ -158,16 +203,19 @@ public class PlayerCtrl : MonoBehaviour {
 								}
 						}
 
-						//アニメーション用フラグを設定
-						float walkShotFlag = (shotFlag ? 1.0f : 0f);
-						GetComponent<Animator> ().SetBool ("walkFlag", walkFlag);
-						GetComponent<Animator> ().SetBool ("shotFlag", shotFlag);
-						GetComponent<Animator> ().SetFloat ("walkshot", walkShotFlag);
-						GetComponent<Animator> ().SetFloat ("jumpSpeed", transform.rigidbody2D.velocity.y);
-						GetComponent<Animator> ().SetBool ("jumpFlag", jumpFlag);
-						GetComponent<Animator> ().SetBool ("ladderFlag", ladderFlag);
-						GetComponent<Animator> ().SetFloat ("ladderPos", (int)Mathf.Abs(transform.position.y + Camera.screenSizeY / 2) / 8 % 2);
+
 				}
+
+				//アニメーション用フラグを設定
+				float walkShotFlag = (shotFlag ? 1.0f : 0f);
+				GetComponent<Animator> ().SetBool ("walkFlag", walkFlag);
+				GetComponent<Animator> ().SetBool ("shotFlag", shotFlag);
+				GetComponent<Animator> ().SetFloat ("walkshot", walkShotFlag);
+				GetComponent<Animator> ().SetFloat ("jumpSpeed", transform.rigidbody2D.velocity.y);
+				GetComponent<Animator> ().SetBool ("jumpFlag", jumpFlag);
+				GetComponent<Animator> ().SetBool ("ladderFlag", ladderFlag);
+				GetComponent<Animator> ().SetFloat ("ladderPos", (int)Mathf.Abs(transform.position.y + Camera.screenSizeY / 2) / 8 % 2);
+				GetComponent<Animator> ().SetBool ("warpFlag", warpFlag);
 
 				//デバッグ---------------------------------------------------
 				//MyDebug ();
@@ -199,6 +247,11 @@ public class PlayerCtrl : MonoBehaviour {
 								//スプライト非表示
 								this.transform.renderer.enabled = false;
 								this.gameObject.layer = LayerMask.NameToLayer ("PlayerThrough");
+
+								//ライフ０時のエフェクト
+								GameObject explodeEffect = Instantiate (explode, this.transform.position, this.transform.rotation) as GameObject;
+								Destroy (explodeEffect, 5);
+
 						} else {
 								//無敵時間発生
 								StartCoroutine ("InvincibleTime");
@@ -349,7 +402,9 @@ public class PlayerCtrl : MonoBehaviour {
 		//登場ワープ制御------------------------------------------------------------
 		//スタート地点を更新
 		public void setRestartPos(Vector3 vec){
-				restartPos = vec;
+				Vector3 tmp = vec;
+				tmp.y += Camera.screenSizeY;
+				restartPos = tmp;
 		}
 
 		//ワープフラグセッタ
@@ -361,4 +416,15 @@ public class PlayerCtrl : MonoBehaviour {
 				return warpFlag;
 		}
 
+
+		/// ////////////////////////////////////////////////////////////////////////////
+		//ゲッタ
+		public int getLife(){
+				return lifePoint;
+		}
+
+		//セッタ
+		public void setLife(int num){
+				lifePoint = num;
+		}
 }

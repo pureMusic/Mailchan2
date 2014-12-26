@@ -45,31 +45,41 @@ public class Camera : MonoBehaviour {
 		}
 
 		//横スクロール
-		IEnumerator ScrollX(){
+		IEnumerator ScrollX(int vec){
 				int i = 0;
 				Vector3 v = transform.position;
 				for(i = 0; i < (int)scrollTime; i++){
-						v.x += screenSizeX / scrollTime;
+						v.x += vec * screenSizeX / scrollTime;
 						transform.position = v;
 						yield return new WaitForSeconds(1/scrollTime);
 
 				}
-				scrollStartPos = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
+				if (screenNumX > 0) {
+						scrollStartPos = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
+				} else {
+						screenNumX = (-1) * screenNumX;
+						scrollStartPos = new Vector3 (transform.position.x - (screenNumX - 1) * screenSizeX, transform.position.y, transform.position.z);
+				}
 				ctrlFlag = true;
 
 		}
 
 		//縦スクロール
-		IEnumerator ScrollY(){
+		IEnumerator ScrollY(int vec){
 				int i = 0;
 				Vector3 v = transform.position;
 				for(i = 0; i < (int)scrollTime; i++){
-						v.y += screenSizeY / scrollTime;
+						v.y += vec * screenSizeY / scrollTime;
 						transform.position = v;
 						yield return new WaitForSeconds(1/scrollTime);
 
 				}
-				scrollStartPos = new Vector2 (transform.position.x, transform.position.y);
+				if (screenNumX > 0) {
+						scrollStartPos = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
+				} else {
+						screenNumX = (-1) * screenNumX;
+						scrollStartPos = new Vector3 (transform.position.x - (screenNumX - 1) * screenSizeX, transform.position.y, transform.position.z);
+				}
 				ctrlFlag = true;
 
 		}

@@ -363,13 +363,13 @@ public class PlayerCtrl : MonoBehaviour {
 		}
 
 		//スクロール制御--------------------------------------------------------------------------
-		IEnumerator ScrollX(){
+		IEnumerator ScrollX(int vec){
 				int i = 0;
 				rigidbody2D.velocity = new Vector2 (0, 0);
 				rigidbody2D.isKinematic = true;
 				Vector3 v = transform.position;
 				for(i = 0; i < (int)scrollTime; i++){
-						v.x += 32 / scrollTime;
+						v.x += vec * 32 / scrollTime;
 						transform.position = v;
 						yield return new WaitForSeconds(1/scrollTime);
 
@@ -379,19 +379,20 @@ public class PlayerCtrl : MonoBehaviour {
 
 		}
 
-		IEnumerator ScrollY(){
+		IEnumerator ScrollY(int vec){
 				int i = 0;
+				bool isKinematicTmp = rigidbody2D.isKinematic;
 				rigidbody2D.velocity = new Vector2 (0, 0);
 				rigidbody2D.isKinematic = true;
 				Vector3 v = transform.position;
 				for(i = 0; i < (int)scrollTime; i++){
-						v.y += 64 / scrollTime;
+						v.y += vec * 64 / scrollTime;
 						transform.position = v;
 						yield return new WaitForSeconds(1/scrollTime);
 
 				}
 				ctrlFlag = true;
-				rigidbody2D.isKinematic = false;
+				rigidbody2D.isKinematic = isKinematicTmp;
 
 		}
 	

@@ -124,10 +124,10 @@ public class EnemyCtrl : MonoBehaviour {
 
 		//ペリカン
 		IEnumerator Pattern04(){
-
-				while (true) {
-						yield return new WaitForSeconds (1);
-				}
+				moveFlag = true;
+				animeFlag = true;
+				//actionFlag = true;
+				yield return new WaitForSeconds (1);
 		}
 
 

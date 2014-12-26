@@ -16,12 +16,14 @@ public class EnemyCtrl : MonoBehaviour {
 		public float moveSpeed;			//移動速度
 		public bool animeFlag;			//個別アニメーション用フラグ
 		public bool guardFlag = false;	//ガード状態フラグ
+		private bool actionFlag = false;//パターン開始用フラグ
 
 
 		// Use this for initialization
 		void Start () {
 				nowSprite = gameObject.GetComponent<SpriteRenderer> ();
 				nowSprite.sprite = defSprite;
+				actionFlag = true;
 		}
 		
 		// Update is called once per frame
@@ -37,6 +39,11 @@ public class EnemyCtrl : MonoBehaviour {
 				//向き変更
 				setFaceRight ();
 
+				if (actionFlag == true) {
+						actionFlag = false;
+						StartCoroutine ("Pattern" + enemyType);
+				}
+
 				//アニメーション用フラグを設定
 				GetComponent<Animator> ().SetBool ("animeFlag", animeFlag);
 		}
@@ -44,9 +51,8 @@ public class EnemyCtrl : MonoBehaviour {
 		//行動制御---------------------------------------------------------------------
 		//tenp
 		IEnumerator Pattern00(){
-				while (true) {
-						yield return new WaitForSeconds (1);
-				}
+				yield return new WaitForSeconds (1);
+				actionFlag = true;
 		}
 
 		IEnumerator Pattern01(){
@@ -70,29 +76,28 @@ public class EnemyCtrl : MonoBehaviour {
 				}
 		}
 
-		//メッソール
+		//メッサール
 		IEnumerator Pattern02(){
-				int counter = 4;	//ガード時間
+				float counter = 4;	//ガード時間
 				guardFlag = true;
 
-				while (true) {
-						yield return new WaitForSeconds (counter);
-						//攻撃開始
-						animeFlag = true;
-						guardFlag = false;
-						yield return new WaitForSeconds (1);
-						LockPlayer ();
-						moveFlag = true;
-						Vector3 v3 = this.transform.position;
-						GameObject bulletCtrl = Instantiate (bullet, v3, this.transform.localRotation) as GameObject;
-						Bullet b = bulletCtrl.GetComponent<Bullet> ();
-						b.BulletCtrl (1, faceRight);
-						yield return new WaitForSeconds (1);
-						moveFlag = false;
-						yield return new WaitForSeconds (1);
-						guardFlag = true;
-						animeFlag = false;
-				}
+				yield return new WaitForSeconds (counter);
+				//攻撃開始
+				animeFlag = true;
+				guardFlag = false;
+				yield return new WaitForSeconds (1);	
+				LockPlayer ();
+				moveFlag = true;
+				Vector3 v3 = this.transform.position;
+				GameObject bulletCtrl = Instantiate (bullet, v3, this.transform.localRotation) as GameObject;
+				Bullet b = bulletCtrl.GetComponent<Bullet> ();
+				b.BulletCtrl (1, faceRight);
+				yield return new WaitForSeconds (1);		
+				moveFlag = false;
+				yield return new WaitForSeconds (1);		
+				guardFlag = true;
+				animeFlag = false;
+				actionFlag = true;
 		}
 
 		//ポスト
@@ -100,22 +105,21 @@ public class EnemyCtrl : MonoBehaviour {
 				int counter = 4;	//ガード時間
 				guardFlag = true;
 
-				while (true) {
-						yield return new WaitForSeconds (counter);
+				yield return new WaitForSeconds (counter);
 
-						//攻撃開始
-						animeFlag = true;
-						yield return new WaitForSeconds (40 / 60f);
-						LockPlayer ();
-						guardFlag = false;
-						Vector3 v3 = this.transform.position;
-						GameObject bulletCtrl = Instantiate (bullet, v3, this.transform.localRotation) as GameObject;
-						Bullet b = bulletCtrl.GetComponent<Bullet> ();
-						b.BulletCtrl (1, faceRight);
-						yield return new WaitForSeconds (45/60f);
-						guardFlag = true;
-						animeFlag = false;
-				}
+				//攻撃開始
+				animeFlag = true;
+				yield return new WaitForSeconds (40 / 60f);
+				LockPlayer ();
+				guardFlag = false;
+				Vector3 v3 = this.transform.position;
+				GameObject bulletCtrl = Instantiate (bullet, v3, this.transform.localRotation) as GameObject;
+				Bullet b = bulletCtrl.GetComponent<Bullet> ();
+				b.BulletCtrl (1, faceRight);
+				yield return new WaitForSeconds (45 / 60f);
+				guardFlag = true;
+				animeFlag = false;
+				actionFlag = true;
 		}
 
 		//ペリカン
@@ -143,13 +147,15 @@ public class EnemyCtrl : MonoBehaviour {
 
 								//オブジェクト削除
 								Destroy (this.gameObject);
+						} else {
+								//点滅処理
+								StartCoroutine ("InvincibleTime");
 						}
 				}
 		}
 
 		//プレイヤーの方を見る
 		void LockPlayer(){
-				//GameObject target = GameObject.FindGameObjectWithTag("Player");
 				GameObject target = GameObject.Find ("Mailchan");
 				if (target.transform.position.x > this.transform.position.x) {
 						faceRight = true;
@@ -180,12 +186,24 @@ public class EnemyCtrl : MonoBehaviour {
 		//フレームイン処理
 		void OnBecameVisible(){
 				//行動開始
-				StartCoroutine ("Pattern" + enemyType);
+				//StartCoroutine ("Pattern" + enemyType);
 		}
 
 		//フレームアウト処理
 		void OnBecameInvisible(){
-				//オブジェクトの削除
-				Destroy (this.gameObject);
+				//点滅ではなく画面外のみ
+				if (transform.renderer.enabled) {
+						//オブジェクトの削除
+						Destroy (this.gameObject);
+				}
+		}
+
+		//無敵時間発生
+		IEnumerator InvincibleTime(){
+				int count = 0;
+				for (count = 0; count < 4; count++) {
+						transform.renderer.enabled = (count % 2 == 0 ? false : true);
+						yield return new WaitForSeconds(1/60f);
+				}
 		}
 }

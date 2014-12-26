@@ -56,8 +56,18 @@ public class Bullet : MonoBehaviour {
 				//自機の弾が敵にヒット
 				if (col.gameObject.tag == "Enemy" && this.gameObject.tag == "PlayerBullet") {
 						EnemyCtrl enemy = col.GetComponent<EnemyCtrl>();
-						enemy.Damage (damagePoint);
-						Destroy (this.gameObject);
+						if (enemy.guardFlag) {
+								Vector3 vec = this.transform.rigidbody2D.velocity;
+								vec.x = (-1) * vec.x;	//向きの反転
+								vec.y = Mathf.Abs (vec.x);//ななめになるように設定
+								this.transform.rigidbody2D.velocity = vec;
+								//当たり判定を削除
+								this.transform.collider2D.enabled = false;
+
+						} else {
+								enemy.Damage (damagePoint);
+								Destroy (this.gameObject);
+						}
 				}
 		}
 }

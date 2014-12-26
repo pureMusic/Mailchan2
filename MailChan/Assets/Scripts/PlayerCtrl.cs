@@ -140,7 +140,6 @@ public class PlayerCtrl : MonoBehaviour {
 								//着地
 								if (Mathf.Abs( v.y*1000) < 1 && jumpFlag) {
 										jumpFlag = false;
-										print ("a");
 								}
 
 								//ジャンプボタン押下

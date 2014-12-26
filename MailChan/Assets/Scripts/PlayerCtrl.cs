@@ -5,7 +5,7 @@ using System;
 public class PlayerCtrl : MonoBehaviour {
 		//固定パラメータ
 		public static float speed = 64f;			//横移動速度
-		public static float jumpForce = 240f;		//ジャンプ力
+		public static float jumpForce = 256f;		//ジャンプ力
 		public static int bulletMaxNum = 3; 		//画面内の弾の最大数
 		private int maxLifePoint = 28;		//最大ライフポイント
 		private float maxChargePoint = 28f;	//最大チャージポイント
@@ -24,7 +24,7 @@ public class PlayerCtrl : MonoBehaviour {
 		public int playerNum = 3;			//残機数(初期値）
 
 		//フラグ
-		bool jumpFlag = false;				//ジャンプフラグ
+		private bool jumpFlag = false;		//ジャンプフラグ
 		bool walkFlag = false;				//横移動フラグ
 		bool shotFlag = false;				//ショットフラグ
 		private bool hitFlag = false;		//ダメージ判定フラグ
@@ -48,6 +48,7 @@ public class PlayerCtrl : MonoBehaviour {
 
 				//ダメージエフェクトの設定
 				hitRenderer = Instantiate (hitRenderer, this.transform.position, this.transform.rotation) as GameObject;
+				hitRenderer.transform.parent = this.transform;
 				hitRenderer.transform.renderer.enabled = false;
 
 				//スタート地点の設定
@@ -137,9 +138,9 @@ public class PlayerCtrl : MonoBehaviour {
 										jumpFlag = true;
 								}
 								//着地
-								if (Mathf.Abs( v.y*100) < 1 && jumpFlag) {
+								if (Mathf.Abs( v.y*1000) < 1 && jumpFlag) {
 										jumpFlag = false;
-
+										print ("a");
 								}
 
 								//ジャンプボタン押下
@@ -149,7 +150,7 @@ public class PlayerCtrl : MonoBehaviour {
 								}
 								//ジャンプボタンを離す
 								if (Input.GetKeyUp ("space") && jumpFlag && v.y > 0) {
-										v.y = 0;
+										v.y = -1f;
 								}
 
 
@@ -170,8 +171,6 @@ public class PlayerCtrl : MonoBehaviour {
 										transform.rigidbody2D.isKinematic = true;
 										transform.position = new Vector3 (ladderPosX, transform.position.y, transform.position.z);
 								}
-
-
 						}
 
 						//右を向いていて、左の入力があったとき、もしくは左を向いていて、右の入力があったとき
@@ -202,8 +201,6 @@ public class PlayerCtrl : MonoBehaviour {
 										shotCounter = 0;
 								}
 						}
-
-
 				}
 
 				//アニメーション用フラグを設定
@@ -423,8 +420,24 @@ public class PlayerCtrl : MonoBehaviour {
 				return lifePoint;
 		}
 
+		public bool getLadderFlag(){
+				return ladderFlag;
+		}
+
+		public bool getJumpFlag(){
+				return jumpFlag;
+		}
+				
 		//セッタ
 		public void setLife(int num){
 				lifePoint = num;
+		}
+
+		public void setLadderFlag(bool flag){
+				ladderFlag = flag;
+		}
+
+		public void setJumpFlag(bool flag){
+				jumpFlag = flag;
 		}
 }

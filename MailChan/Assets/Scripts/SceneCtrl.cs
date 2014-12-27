@@ -3,6 +3,7 @@ using System.Collections;
 
 public class SceneCtrl : MonoBehaviour {
 		public enum SceneName{
+				PROLOGUE,	//プロローグ画面
 				TITLE,		//タイトル画面
 				STAGE,		//ステージ画面
 				GAMEOVER,	//ゲームオーバー画面
@@ -13,15 +14,21 @@ public class SceneCtrl : MonoBehaviour {
 
 		// Use this for initialization
 		void Start () {
-
+				//GameObject.Find ("PrologueMessage").animation.Play ();
 		}
 		
 		// Update is called once per frame
 		void Update () {
 				switch (scene) {
+				case SceneName.PROLOGUE:
+						if (Input.GetKeyDown ("return") || !GameObject.Find ("PrologueMessage").animation.isPlaying) {
+								Application.LoadLevel ("Title");
+						}
+						break;
+
 				case SceneName.TITLE:
 						if (Input.GetKeyDown ("return")) {
-								Application.LoadLevel ("Stage");
+								Application.LoadLevel ("SampleStage");
 						}
 						break;
 

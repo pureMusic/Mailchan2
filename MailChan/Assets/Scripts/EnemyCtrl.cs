@@ -145,6 +145,9 @@ public class EnemyCtrl : MonoBehaviour {
 								destroy = Instantiate (destroy, this.transform.position, this.transform.rotation) as GameObject;
 								Destroy (destroy, 1 / 6f);	//10F
 
+								//アイテムドロップ
+								this.transform.FindChild("ItemSpawn").GetComponent<ItemSpawn>().CreateItem();
+
 								//オブジェクト削除
 								Destroy (this.gameObject);
 						} else {

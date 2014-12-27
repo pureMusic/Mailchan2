@@ -84,10 +84,7 @@ public class PlayerCtrl : MonoBehaviour {
 				ladderEnable = false;	//梯子接触フラグ
 				warpFlag = true;		//ワープフラグ
 
-				GameObject lifeBar = GameObject.Find ("LifeBar1");
-				Vector2 vec = lifeBar.transform.localScale;
-				vec.y = lifePoint;
-				lifeBar.transform.localScale = vec;
+				LifeBarUpdate ();
 		}
 
 		void Update(){
@@ -202,6 +199,7 @@ public class PlayerCtrl : MonoBehaviour {
 						}
 				}
 
+
 				//アニメーション用フラグを設定
 				float walkShotFlag = (shotFlag ? 1.0f : 0f);
 				GetComponent<Animator> ().SetBool ("walkFlag", walkFlag);
@@ -252,10 +250,9 @@ public class PlayerCtrl : MonoBehaviour {
 								//無敵時間発生
 								StartCoroutine ("InvincibleTime");
 						}
-						GameObject lifeBar = GameObject.Find ("LifeBar1");
-						Vector2 vec = lifeBar.transform.localScale;
-						vec.y = lifePoint;
-						lifeBar.transform.localScale = vec;
+
+						//ライフバー更新
+						LifeBarUpdate ();
 				}
 		}
 
@@ -280,6 +277,18 @@ public class PlayerCtrl : MonoBehaviour {
 				hitFlag = false;
 				this.gameObject.layer = LayerMask.NameToLayer ("Player");
 		}
+
+		//ライフバー更新
+		public void LifeBarUpdate(){
+				GameObject lifeBar = GameObject.Find ("LifeBar1");
+				Vector2 vec = lifeBar.transform.localScale;
+				if (lifePoint > maxLifePoint) {
+						lifePoint = maxLifePoint;
+				}
+				vec.y = lifePoint;
+				lifeBar.transform.localScale = vec;
+		}
+
 
 		//ショット制御--------------------------------------------------------------
 
@@ -338,7 +347,6 @@ public class PlayerCtrl : MonoBehaviour {
 						ladderEnable = true;
 						ladderPosX = col.gameObject.transform.position.x;
 				}
-
 		}
 
 		//離れた時の処理

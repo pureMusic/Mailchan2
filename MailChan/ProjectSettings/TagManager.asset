@@ -9,6 +9,7 @@ TagManager:
   - PlayerBullet
   - Ladder
   - Block
+  - Item
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
@@ -62,6 +63,10 @@ TagManager:
   - name: parameter
     userID: 5
     uniqueID: 1623705927
+    locked: 0
+  - name: item
+    userID: 6
+    uniqueID: 2894318285
     locked: 0
   - name: character
     userID: 4

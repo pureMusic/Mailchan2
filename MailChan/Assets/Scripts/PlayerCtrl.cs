@@ -11,8 +11,7 @@ public class PlayerCtrl : MonoBehaviour {
 		private float maxChargePoint = 28f;	//最大チャージポイント
 		public static float chargeTime = 2f;		//チャージにかかる秒数
 		public static float scrollTime = 120f;		//スクロール時間
-		private int maxPlayerNum = 9;		//最大残機数
-		private float gravity = 64;				//重力
+		private float gravity = 48;				//重力
 		private AudioSource[] se;
 
 		//現在パラメータ

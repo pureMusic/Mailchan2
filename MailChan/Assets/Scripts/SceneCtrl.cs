@@ -11,10 +11,23 @@ public class SceneCtrl : MonoBehaviour {
 		}; 
 
 		public SceneName scene;
+		private bool changeFlag;
 
 		// Use this for initialization
 		void Start () {
-				//GameObject.Find ("PrologueMessage").animation.Play ();
+				switch (scene) {
+				case SceneName.STAGE:
+						changeFlag = false;
+						break;
+				case SceneName.GAMEOVER:
+						changeFlag = false;
+						StartCoroutine("FadeIn",GameObject.Find("Black").GetComponent<SpriteRenderer>());
+						break;
+				default:
+						changeFlag = true;
+						break;
+
+				}
 		}
 		
 		// Update is called once per frame
@@ -38,11 +51,15 @@ public class SceneCtrl : MonoBehaviour {
 								StartCoroutine ("StageRestart");
 								playerCtrl.setLife (-1);
 						}
-								
-
+						if (changeFlag) {
+								Application.LoadLevel ("GameOver");
+						}
 						break;
 
 				case SceneName.GAMEOVER:
+						if (changeFlag && Input.GetKeyDown (KeyCode.Return)) {
+								Application.LoadLevel ("Title");
+						}
 						break;
 
 				case SceneName.CHANGE:
@@ -81,7 +98,23 @@ public class SceneCtrl : MonoBehaviour {
 								Destroy (obj);
 						}
 				} else {
-						//scene = SceneName.TITLE;
+						changeFlag = true;
 				}
 		}
+
+		IEnumerator FadeIn(SpriteRenderer sprite){
+				float time = 2f;	//エフェクト時間
+				Color c = sprite.color;
+				while (sprite.color.a > 0) {
+						print (c.a);
+						c.a -= 1f / (60 * time);
+						if (c.a < 0) {
+								c.a = 0;
+						}
+						sprite.color = c;
+						yield return null;
+				}
+				changeFlag = true;
+		}
+
 }

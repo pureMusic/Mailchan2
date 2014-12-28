@@ -111,9 +111,9 @@ public class EnemyCtrl : MonoBehaviour {
 
 				//攻撃開始
 				animeFlag = true;
+				guardFlag = false;
 				yield return new WaitForSeconds (40 / 60f);
 				LockPlayer ();
-				guardFlag = false;
 				Vector3 v3 = this.transform.position;
 				GameObject bulletCtrl = Instantiate (bullet, v3, this.transform.localRotation) as GameObject;
 				Bullet b = bulletCtrl.GetComponent<Bullet> ();

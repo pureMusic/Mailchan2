@@ -32,6 +32,7 @@ public class PlayerCtrl : MonoBehaviour {
 		private bool ladderFlag = false;	//梯子移動フラグ
 		private bool ladderEnable = false;	//梯子接触フラグ
 		private bool warpFlag = true;		//ワープフラグ
+		private bool damageFlag = false;	//ダメージフラグ
 
 		//プレハブ
 		public GameObject nBullet;			//通常ショットのプレハブ
@@ -206,14 +207,16 @@ public class PlayerCtrl : MonoBehaviour {
 
 				//アニメーション用フラグを設定
 				float walkShotFlag = (shotFlag ? 1.0f : 0f);
-				GetComponent<Animator> ().SetBool ("walkFlag", walkFlag);
-				GetComponent<Animator> ().SetBool ("shotFlag", shotFlag);
-				GetComponent<Animator> ().SetFloat ("walkshot", walkShotFlag);
-				GetComponent<Animator> ().SetFloat ("jumpSpeed", transform.rigidbody2D.velocity.y);
-				GetComponent<Animator> ().SetBool ("jumpFlag", jumpFlag);
-				GetComponent<Animator> ().SetBool ("ladderFlag", ladderFlag);
-				GetComponent<Animator> ().SetFloat ("ladderPos", (int)Mathf.Abs(transform.position.y + Camera.screenSizeY / 2) / 8 % 2);
-				GetComponent<Animator> ().SetBool ("warpFlag", warpFlag);
+				Animator FlagList = GetComponent<Animator> ();
+				FlagList.SetBool ("walkFlag", walkFlag);
+				FlagList.SetBool ("shotFlag", shotFlag);
+				FlagList.SetFloat ("walkshot", walkShotFlag);
+				FlagList.SetFloat ("jumpSpeed", transform.rigidbody2D.velocity.y);
+				FlagList.SetBool ("jumpFlag", jumpFlag);
+				FlagList.SetBool ("ladderFlag", ladderFlag);
+				FlagList.SetFloat ("ladderPos", (int)Mathf.Abs(transform.position.y + Camera.screenSizeY / 2) / 8 % 2);
+				FlagList.SetBool ("warpFlag", warpFlag);
+				FlagList.SetBool ("damageFlag", damageFlag);
 
 				//デバッグ---------------------------------------------------
 				//MyDebug ();
@@ -251,6 +254,14 @@ public class PlayerCtrl : MonoBehaviour {
 								Destroy (explodeEffect, 5);
 
 						} else {
+								//梯子を離す
+								ladderEnable = false;
+								ladderFlag = false;
+								rigidbody2D.isKinematic = false;
+
+								//ノックバック
+								this.transform.rigidbody2D.velocity = new Vector2 (speed * (facingRight ? -1 : 1), 0);
+
 								//無敵時間発生
 								StartCoroutine ("InvincibleTime");
 								se [1].PlayOneShot (se [1].clip);
@@ -266,6 +277,9 @@ public class PlayerCtrl : MonoBehaviour {
 				int count = 0;
 				hitRenderer.transform.position = this.transform.position; 
 				this.gameObject.layer = LayerMask.NameToLayer ("PlayerThrough");
+				damageFlag = true;
+				ctrlFlag = false;
+
 				//ダメージエフェクト表示
 				for (count = 0; count < 10; count++) {
 						hitRenderer.renderer.enabled = (count % 2 == 0 ? true : false);
@@ -273,6 +287,8 @@ public class PlayerCtrl : MonoBehaviour {
 						yield return new WaitForSeconds (1 / 60f);
 				}
 				//ダメージエフェクトを終了し、無敵継続
+				damageFlag = false;
+				ctrlFlag = true;
 				for (count = 0; count < 50; count++) {
 						this.transform.renderer.enabled = (count % 2 == 0 ? false : true);
 						yield return new WaitForSeconds (1 / 60f);

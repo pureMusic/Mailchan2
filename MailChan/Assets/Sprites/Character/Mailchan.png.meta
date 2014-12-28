@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e76f467ae5dd0ee47a88f35718d7ad38
+guid: 36022caecc1994a4490e7bf617570a91
 TextureImporter:
   fileIDToRecycleName:
     21300000: Mailchan_0
@@ -18,6 +18,9 @@ TextureImporter:
     21300026: Mailchan_13
     21300028: Mailchan_14
     21300030: Mailchan_15
+    21300032: Mailchan_16
+    21300034: Mailchan_17
+    21300036: Mailchan_18
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -63,7 +66,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -73,7 +76,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 32
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -83,7 +86,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 32
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -93,7 +96,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 32
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -103,7 +106,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 128
-        y: 32
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -113,7 +116,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 32
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -123,7 +126,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 192
-        y: 32
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -133,7 +136,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 224
-        y: 32
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -143,7 +146,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -153,7 +156,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 0
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -163,7 +166,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 0
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -173,7 +176,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 0
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -183,7 +186,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 128
-        y: 0
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -193,7 +196,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 0
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -203,7 +206,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 192
-        y: 0
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -213,6 +216,36 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 224
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Mailchan_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Mailchan_17
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Mailchan_18
+      rect:
+        serializedVersion: 2
+        x: 64
         y: 0
         width: 32
         height: 32

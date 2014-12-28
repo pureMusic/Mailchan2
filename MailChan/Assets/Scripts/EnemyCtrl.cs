@@ -17,6 +17,7 @@ public class EnemyCtrl : MonoBehaviour {
 		public bool animeFlag;			//個別アニメーション用フラグ
 		public bool guardFlag = false;	//ガード状態フラグ
 		private bool actionFlag = false;//パターン開始用フラグ
+		private AudioSource[] se;
 
 
 		// Use this for initialization
@@ -24,6 +25,7 @@ public class EnemyCtrl : MonoBehaviour {
 				nowSprite = gameObject.GetComponent<SpriteRenderer> ();
 				nowSprite.sprite = defSprite;
 				actionFlag = true;
+				se = GetComponents<AudioSource> ();
 		}
 		
 		// Update is called once per frame
@@ -138,7 +140,7 @@ public class EnemyCtrl : MonoBehaviour {
 		public void Damage(int damage){
 				if (!guardFlag) {
 						lifePoint -= damage;
-
+						se [0].PlayOneShot (se [0].clip);
 						//死亡判定
 						if (lifePoint <= 0) {
 								//消滅エフェクト
@@ -146,7 +148,7 @@ public class EnemyCtrl : MonoBehaviour {
 								Destroy (destroy, 1 / 6f);	//10F
 
 								//アイテムドロップ
-								this.transform.FindChild("ItemSpawn").GetComponent<ItemSpawn>().CreateItem();
+								this.transform.FindChild ("ItemSpawn").GetComponent<ItemSpawn> ().CreateItem ();
 
 								//オブジェクト削除
 								Destroy (this.gameObject);
@@ -154,6 +156,8 @@ public class EnemyCtrl : MonoBehaviour {
 								//点滅処理
 								StartCoroutine ("InvincibleTime");
 						}
+				} else {
+						se [1].PlayOneShot (se [1].clip);
 				}
 		}
 

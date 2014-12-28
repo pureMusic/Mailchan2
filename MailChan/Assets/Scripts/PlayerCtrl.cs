@@ -13,6 +13,7 @@ public class PlayerCtrl : MonoBehaviour {
 		public static float scrollTime = 120f;		//スクロール時間
 		private int maxPlayerNum = 9;		//最大残機数
 		private float gravity = 64;				//重力
+		private AudioSource[] se;
 
 		//現在パラメータ
 		private Vector3 restartPos;			//スタート地点
@@ -53,6 +54,9 @@ public class PlayerCtrl : MonoBehaviour {
 
 				//スタート地点の設定
 				restartPos = new Vector3 (0, 0, 0);
+
+				//SEの設定
+				se = GetComponents<AudioSource> ();
 		}
 
 		public void ReStart(){
@@ -136,6 +140,7 @@ public class PlayerCtrl : MonoBehaviour {
 								}
 								//着地
 								if (Mathf.Abs( v.y*1000) < 1 && jumpFlag) {
+										se [2].PlayOneShot (se [2].clip);
 										jumpFlag = false;
 								}
 
@@ -249,6 +254,7 @@ public class PlayerCtrl : MonoBehaviour {
 						} else {
 								//無敵時間発生
 								StartCoroutine ("InvincibleTime");
+								se [1].PlayOneShot (se [1].clip);
 						}
 
 						//ライフバー更新
@@ -305,6 +311,7 @@ public class PlayerCtrl : MonoBehaviour {
 				}else {
 						bulletCtrl = Instantiate (cBullet, v3, transform.rotation) as GameObject;
 				}
+				se [0].PlayOneShot (se [0].clip);
 				Bullet b = bulletCtrl.GetComponent<Bullet> ();
 				b.BulletCtrl (0, facingRight);
 

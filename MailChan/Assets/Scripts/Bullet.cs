@@ -56,6 +56,7 @@ public class Bullet : MonoBehaviour {
 				//自機の弾が敵にヒット
 				if (col.gameObject.tag == "Enemy" && this.gameObject.tag == "PlayerBullet") {
 						EnemyCtrl enemy = col.GetComponent<EnemyCtrl>();
+						enemy.Damage (damagePoint);
 						if (enemy.guardFlag) {
 								Vector3 vec = this.transform.rigidbody2D.velocity;
 								vec.x = (-1) * vec.x;	//向きの反転
@@ -65,7 +66,6 @@ public class Bullet : MonoBehaviour {
 								this.transform.collider2D.enabled = false;
 
 						} else {
-								enemy.Damage (damagePoint);
 								Destroy (this.gameObject);
 						}
 				}

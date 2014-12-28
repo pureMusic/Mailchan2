@@ -10,7 +10,7 @@ public class SceneCtrl : MonoBehaviour {
 				CHANGE		//シーン切り替え
 		}; 
 
-		public SceneName scene = SceneName.TITLE;
+		public SceneName scene;
 
 		// Use this for initialization
 		void Start () {

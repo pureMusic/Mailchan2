@@ -249,7 +249,7 @@ MonoBehaviour:
   defSprite: {fileID: 21300012, guid: 984f2b3b213e9cf4ea8023f508d6e200, type: 3}
   moveSprite: {fileID: 0}
   attackSprite: {fileID: 0}
-  bullet: {fileID: 100002, guid: ee22a144fac33ce458921c9575e2c6dd, type: 2}
+  bullet: {fileID: 100000, guid: 410fe805fe2f35c49b0630ce631fa01e, type: 2}
   faceRight: 0
   destroy: {fileID: 100000, guid: 02d787408240d6941aca21e768650135, type: 2}
   moveFlag: 0

@@ -342,7 +342,7 @@ public class PlayerCtrl : MonoBehaviour {
 				}
 				se [0].PlayOneShot (se [0].clip);
 				Bullet b = bulletCtrl.GetComponent<Bullet> ();
-				b.BulletCtrl (0, facingRight);
+				b.BulletCtrl (facingRight);
 
 				//ショットを管理用リストの子に設定
 				b.transform.parent = GameObject.Find("BulletList").transform;

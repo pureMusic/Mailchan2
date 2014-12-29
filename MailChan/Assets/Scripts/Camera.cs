@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Camera : MonoBehaviour {
 
-		public GameObject player;			//プレイヤー
 		public float screenNumX = 1;		//現在のスクロール可能画面数
 		public static float screenSizeX = 352f;	//画面サイズ
 		public static float screenSizeY = 198f;
@@ -31,7 +30,7 @@ public class Camera : MonoBehaviour {
 				if (ctrlFlag) {
 						//カメラ移動（追従）
 						Vector3 v = transform.position;
-						v.x = player.transform.position.x;
+						v.x = GameObject.Find ("Mailchan").transform.position.x;
 
 						//見切れ防止
 						if (v.x < scrollStartPos.x) {

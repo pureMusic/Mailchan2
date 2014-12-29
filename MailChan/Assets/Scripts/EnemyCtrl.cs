@@ -65,12 +65,12 @@ public class EnemyCtrl : MonoBehaviour {
 						Vector3 v3 = this.transform.position;
 						GameObject bulletCtrl = Instantiate (bullet, v3, this.transform.localRotation) as GameObject;
 						Bullet b = bulletCtrl.GetComponent<Bullet> ();
-						b.BulletCtrl (1, faceRight);
+						b.BulletCtrl (faceRight);
 
 						faceRight = (faceRight ? false : true);
 						GameObject bulletCtrl2 = Instantiate (bullet, v3, this.transform.localRotation) as GameObject;
 						Bullet b2 = bulletCtrl2.GetComponent<Bullet> ();
-						b2.BulletCtrl (0, faceRight);
+						b2.BulletCtrl (faceRight);
 
 						yield return new WaitForSeconds (2);
 						nowSprite.sprite = defSprite;
@@ -91,9 +91,11 @@ public class EnemyCtrl : MonoBehaviour {
 				LockPlayer ();
 				moveFlag = true;
 				Vector3 v3 = this.transform.position;
-				GameObject bulletCtrl = Instantiate (bullet, v3, this.transform.localRotation) as GameObject;
-				Bullet b = bulletCtrl.GetComponent<Bullet> ();
-				b.BulletCtrl (1, faceRight);
+				GameObject bulletCtrl;
+				for (int i = 0; i < 3; i++) {
+						bulletCtrl = Instantiate (bullet, v3, this.transform.localRotation) as GameObject;
+						bulletCtrl.GetComponent<Bullet> ().BulletCtrl (faceRight, (i - 1) * Mathf.PI / 4);
+				}
 				yield return new WaitForSeconds (1);		
 				moveFlag = false;
 				yield return new WaitForSeconds (1);		
@@ -117,7 +119,7 @@ public class EnemyCtrl : MonoBehaviour {
 				Vector3 v3 = this.transform.position;
 				GameObject bulletCtrl = Instantiate (bullet, v3, this.transform.localRotation) as GameObject;
 				Bullet b = bulletCtrl.GetComponent<Bullet> ();
-				b.BulletCtrl (1, faceRight);
+				b.BulletCtrl (faceRight);
 				yield return new WaitForSeconds (45 / 60f);
 				guardFlag = true;
 				animeFlag = false;

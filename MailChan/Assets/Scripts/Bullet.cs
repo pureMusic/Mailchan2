@@ -3,11 +3,18 @@ using System.Collections;
 using System;
 
 public class Bullet : MonoBehaviour {
+		public enum BulletType {
+				STRAIGHT,
+				TARGET_E_TO_P,
+				ANGLE,
+		};
+
 		public int damagePoint = 1;			//ダメージ量
 		public float bulletSpeed = 128f;	//速度
-		public float radian;
+		public float angle;					//角度
+		public BulletType ctrlType;			//弾の種類
 		Vector2 targetPos;					//誘導タイプのターゲット
-		private int ctrlType;				//弾の種類
+	
 
 		// Use this for initialization
 		void Start () {
@@ -16,26 +23,40 @@ public class Bullet : MonoBehaviour {
 		
 		// Update is called once per frame
 		void Update () {
-				if (ctrlType == 0) {
-						//回転させる
-						//transform.Rotate (0, 0, 90) ;
+	
+		}
+
+		public void BulletCtrl(bool faceRight){
+				switch(ctrlType){
+				//等速直進
+				case BulletType.STRAIGHT:
+						rigidbody2D.velocity = new Vector2 ((faceRight ? 1 : -1) * bulletSpeed, 0);
+						break;
+				
+				//自機狙い
+				case BulletType.TARGET_E_TO_P:
+						GameObject target = GameObject.Find ("Mailchan");
+						targetPos = new Vector2 (target.transform.position.x, target.transform.position.y);
+						float radian = Mathf.Atan2 (targetPos.y - transform.position.y, targetPos.x - transform.position.x);
+						rigidbody2D.velocity = new Vector2 (bulletSpeed * Mathf.Cos (radian), bulletSpeed * Mathf.Sin (radian));
+						break;
+
+				//角度付き
+				case BulletType.ANGLE:
+						rigidbody2D.velocity = new Vector2 ((faceRight ? 1 : -1) * bulletSpeed * Mathf.Cos(angle)
+								, bulletSpeed * Mathf.Sin(angle));
+						break;
 				}
 		}
 
-		public void BulletCtrl(int bulletType, bool faceRight){
-				ctrlType = bulletType;
-				//等速直進
-				if (bulletType == 0) {
-						rigidbody2D.velocity = new Vector2 ((faceRight ? 1 : -1) * bulletSpeed, 0);
-				}
-				//自機狙い
-				if (bulletType == 1) {
-						//GameObject target = GameObject.FindGameObjectWithTag("Player");
-						GameObject target = GameObject.Find ("Mailchan");
-						targetPos = new Vector2(target.transform.position.x, target.transform.position.y);
-						radian = Mathf.Atan2 (targetPos.y - transform.position.y, targetPos.x - transform.position.x);
-						rigidbody2D.velocity = new Vector2 (bulletSpeed * Mathf.Cos (radian), bulletSpeed * Mathf.Sin (radian));
+		public void BulletCtrl(bool faceRight, float angle){
+				switch(ctrlType){
 
+				//角度付き
+				case BulletType.ANGLE:
+						rigidbody2D.velocity = new Vector2 ((faceRight ? 1 : -1) * bulletSpeed * Mathf.Cos(angle)
+								, bulletSpeed * Mathf.Sin(angle));
+						break;
 				}
 		}
 

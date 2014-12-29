@@ -4295,7 +4295,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2a7ccb1ae854a8458ecdcac6912d1fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 260300901}
   screenNumX: 1
   scrollStartPos: {x: 0, y: 0, z: 0}
   ctrlFlag: 1

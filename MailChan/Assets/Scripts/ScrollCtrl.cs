@@ -19,7 +19,7 @@ public class ScrollCtrl : MonoBehaviour {
 		void OnTriggerEnter2D(Collider2D col){
 				if (col.gameObject.tag == "Player") {
 						PlayerCtrl pCtrl = col.gameObject.GetComponent<PlayerCtrl> ();
-						if (pCtrl.ctrlFlag) { 
+						if (!pCtrl.scrollFlag) { 
 								GameObject camera = GameObject.Find ("Main Camera");
 								Camera cameraCtrl = camera.GetComponent<Camera> ();
 

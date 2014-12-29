@@ -11,13 +11,18 @@ public class SceneCtrl : MonoBehaviour {
 		}; 
 
 		public SceneName scene;
+		public GameObject pause;
+		private GameObject pObj;
+		private bool ctrlFlagTmp;
 		private bool changeFlag;
+		private AudioSource bgm;
 
 		// Use this for initialization
 		void Start () {
 				switch (scene) {
 				case SceneName.STAGE:
 						changeFlag = false;
+						bgm = this.gameObject.GetComponent<AudioSource> ();
 						break;
 				case SceneName.GAMEOVER:
 						changeFlag = false;
@@ -48,8 +53,22 @@ public class SceneCtrl : MonoBehaviour {
 				case SceneName.STAGE:
 						PlayerCtrl playerCtrl = GameObject.Find ("Mailchan").GetComponent<PlayerCtrl> ();
 						if (playerCtrl.getLife () == 0) {
+								bgm.Stop();
 								StartCoroutine ("StageRestart");
 								playerCtrl.setLife (-1);
+						}
+						//ポーズ
+						if (playerCtrl.pauseFlag && Input.GetKeyDown (KeyCode.P)) {
+								if (Time.timeScale != 0) {
+										Time.timeScale = 0;
+										ctrlFlagTmp = playerCtrl.ctrlFlag;
+										playerCtrl.ctrlFlag = false;
+										pObj = Instantiate (pause, this.transform.position, this.transform.rotation) as GameObject;
+								} else if(Time.timeScale == 0){
+										Time.timeScale = 1;
+										playerCtrl.ctrlFlag = ctrlFlagTmp;
+										Destroy (pObj);
+								}
 						}
 						if (changeFlag) {
 								Application.LoadLevel ("GameOver");
@@ -97,6 +116,8 @@ public class SceneCtrl : MonoBehaviour {
 						foreach (GameObject obj in deleteObj) {
 								Destroy (obj);
 						}
+						//BGM再生
+						bgm.Play ();
 				} else {
 						changeFlag = true;
 				}

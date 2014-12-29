@@ -72,3 +72,7 @@ TagManager:
     userID: 4
     uniqueID: 1124007295
     locked: 0
+  - name: background3
+    userID: 7
+    uniqueID: 692377483
+    locked: 0

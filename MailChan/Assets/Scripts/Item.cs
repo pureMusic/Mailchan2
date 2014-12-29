@@ -18,7 +18,7 @@ public class Item : MonoBehaviour {
 		// Update is called once per frame
 		void Update () {
 				if (deletable && counter > 0) {
-						counter--;
+						counter -= (int)Time.timeScale;
 						//消滅
 						if (counter == 0) {
 								Destroy (this.gameObject);

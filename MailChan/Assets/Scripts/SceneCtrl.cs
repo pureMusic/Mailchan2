@@ -16,6 +16,7 @@ public class SceneCtrl : MonoBehaviour {
 		private bool ctrlFlagTmp;
 		private bool changeFlag;
 		private AudioSource bgm;
+		public static int gameCounter = 0;
 
 		// Use this for initialization
 		void Start () {
@@ -91,6 +92,7 @@ public class SceneCtrl : MonoBehaviour {
 						break;
 
 				}
+				gameCounter = (gameCounter + 1) % int.MaxValue;
 		}
 
 		IEnumerator StageRestart(){

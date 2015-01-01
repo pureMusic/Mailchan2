@@ -17,7 +17,11 @@ public class EnemyCtrl : MonoBehaviour {
 		public bool animeFlag;			//個別アニメーション用フラグ
 		public bool guardFlag = false;	//ガード状態フラグ
 		private bool actionFlag = false;//パターン開始用フラグ
-		private AudioSource[] se;
+		public enum SE_TYPE {
+				DAMAGE,
+				REFLECT,
+		};
+		public AudioClip[] seClip;
 
 
 		// Use this for initialization
@@ -25,7 +29,6 @@ public class EnemyCtrl : MonoBehaviour {
 				nowSprite = gameObject.GetComponent<SpriteRenderer> ();
 				nowSprite.sprite = defSprite;
 				actionFlag = true;
-				se = GetComponents<AudioSource> ();
 		}
 		
 		// Update is called once per frame
@@ -142,7 +145,7 @@ public class EnemyCtrl : MonoBehaviour {
 		public void Damage(int damage){
 				if (!guardFlag) {
 						lifePoint -= damage;
-						se [0].PlayOneShot (se [0].clip);
+						audio.PlayOneShot (seClip [(int)SE_TYPE.DAMAGE]);
 						//死亡判定
 						if (lifePoint <= 0) {
 								//消滅エフェクト
@@ -153,13 +156,16 @@ public class EnemyCtrl : MonoBehaviour {
 								this.transform.FindChild ("ItemSpawn").GetComponent<ItemSpawn> ().CreateItem ();
 
 								//オブジェクト削除
-								Destroy (this.gameObject);
+								this.gameObject.renderer.enabled = false;
+								this.gameObject.collider2D.enabled = false;
+
+								Destroy (this.gameObject,0.5f);
 						} else {
 								//点滅処理
 								StartCoroutine ("InvincibleTime");
 						}
 				} else {
-						se [1].PlayOneShot (se [1].clip);
+						audio.PlayOneShot (seClip [(int)SE_TYPE.REFLECT]);
 				}
 		}
 
@@ -185,6 +191,7 @@ public class EnemyCtrl : MonoBehaviour {
 		//接触時の処理
 		void OnTriggerEnter2D(Collider2D col){
 				//ダメージ処理
+				print (col.gameObject.tag);
 				if (col.gameObject.tag == "Player") {
 						PlayerCtrl player = col.GetComponent<PlayerCtrl>();
 						player.Damage (damagePoint);

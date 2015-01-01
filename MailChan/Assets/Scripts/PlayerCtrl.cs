@@ -12,7 +12,16 @@ public class PlayerCtrl : MonoBehaviour {
 		public static float chargeTime = 2f;		//チャージにかかる秒数
 		public static float scrollTime = 120f;		//スクロール時間
 		private float gravity = 48;				//重力
-		private AudioSource[] se;
+		enum SE_TYPE {
+				BUSTER = 0,
+				CHARGE,
+				CHARGE_L,
+				CHARGE_BUSTER,
+				DAMAGE,
+				RECOVER,
+				TYAKUTI,
+		};
+		public AudioClip[] seClip;
 
 		//現在パラメータ
 		private Vector3 restartPos;			//スタート地点
@@ -22,6 +31,7 @@ public class PlayerCtrl : MonoBehaviour {
 		private float chargePoint = 0;		//チャージ量
 		private int shotCounter = 0;		//ショットモーション制御カウンター
 		public int playerNum = 3;			//残機数(初期値）
+		private SE_TYPE chargeState;
 
 		//フラグ
 		private bool jumpFlag = false;		//ジャンプフラグ
@@ -56,9 +66,6 @@ public class PlayerCtrl : MonoBehaviour {
 
 				//スタート地点の設定
 				restartPos = new Vector3 (0, 0, 0);
-
-				//SEの設定
-				se = GetComponents<AudioSource> ();
 		}
 
 		public void ReStart(){
@@ -147,7 +154,7 @@ public class PlayerCtrl : MonoBehaviour {
 										}
 										//着地
 										if (Mathf.Abs (v.y * 1000) < 1 && jumpFlag) {
-												se [2].PlayOneShot (se [2].clip);
+												audio.PlayOneShot (seClip[(int)SE_TYPE.TYAKUTI]);
 												jumpFlag = false;
 										}
 
@@ -278,7 +285,7 @@ public class PlayerCtrl : MonoBehaviour {
 
 								//無敵時間発生
 								StartCoroutine ("InvincibleTime");
-								se [1].PlayOneShot (se [1].clip);
+								audio.PlayOneShot (seClip[(int)SE_TYPE.DAMAGE]);
 						}
 
 						//ライフバー更新
@@ -337,10 +344,12 @@ public class PlayerCtrl : MonoBehaviour {
 
 				if (chargePoint != maxChargePoint) {
 						bulletCtrl = Instantiate (nBullet, v3, transform.rotation) as GameObject;
+						audio.PlayOneShot (seClip [(int)SE_TYPE.BUSTER]);
 				}else {
 						bulletCtrl = Instantiate (cBullet, v3, transform.rotation) as GameObject;
+						audio.PlayOneShot (seClip [(int)SE_TYPE.CHARGE_BUSTER]);
 				}
-				se [0].PlayOneShot (se [0].clip);
+
 				Bullet b = bulletCtrl.GetComponent<Bullet> ();
 				b.BulletCtrl (facingRight);
 
@@ -355,6 +364,17 @@ public class PlayerCtrl : MonoBehaviour {
 
 		//チャージ時間管理
 		bool ChargeCheck(){
+				//SE
+				if (chargeState == SE_TYPE.BUSTER && chargePoint > 3) {
+						//audio.PlayOneShot (seClip [(int)SE_TYPE.CHARGE]);
+						chargeState = SE_TYPE.CHARGE;
+				} else if (chargeState == SE_TYPE.CHARGE && chargePoint == maxChargePoint) {
+						//audio.PlayOneShot (seClip [(int)SE_TYPE.CHARGE_L]);
+						chargeState = SE_TYPE.CHARGE_L;
+				} else if (chargePoint == 0) {
+						chargeState = SE_TYPE.BUSTER;
+				}
+
 				chargePoint += maxChargePoint / (chargeTime * 50);
 				if (chargePoint > maxChargePoint) {
 						chargePoint = maxChargePoint;

@@ -138,7 +138,7 @@ AudioSource:
   m_GameObject: {fileID: 100002}
   m_Enabled: 1
   serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: 17c8fd31669d7437888c6828fdc023ab, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -242,6 +242,9 @@ MonoBehaviour:
   moveSpeed: 64
   animeFlag: 0
   guardFlag: 0
+  seClip:
+  - {fileID: 8300000, guid: cb0e46b2d0fb5c8428a44eb0cad08155, type: 3}
+  - {fileID: 8300000, guid: b764878c7e99bbf4d92d79c3b8239927, type: 3}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

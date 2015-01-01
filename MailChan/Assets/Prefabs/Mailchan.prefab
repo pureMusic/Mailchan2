@@ -14,8 +14,6 @@ GameObject:
   - 50: {fileID: 5000000}
   - 95: {fileID: 9500000}
   - 82: {fileID: 8200000}
-  - 82: {fileID: 8200002}
-  - 82: {fileID: 8200004}
   m_Layer: 8
   m_Name: Mailchan
   m_TagString: Player
@@ -69,123 +67,7 @@ AudioSource:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: df49ba5adde92416ea3fd1614743e34e, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
---- !u!82 &8200002
-AudioSource:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: e4c65fab849844fe9b84f2cd8115220f, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
---- !u!82 &8200004
-AudioSource:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: 465da6e97c70542aa83789022ff5b724, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -261,8 +143,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2255ca38177a474c8f06e786ca85d11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  seClip:
+  - {fileID: 8300000, guid: fd9da6ca81fd5ab40b6510f9a70c0ebc, type: 3}
+  - {fileID: 8300000, guid: 7a756011d0560e64bbe314e796dd71a2, type: 3}
+  - {fileID: 8300000, guid: 3ca2b48ecfa25284abe8e1cde3a603ba, type: 3}
+  - {fileID: 8300000, guid: a0776da33fb859b448d5d028ba32c400, type: 3}
+  - {fileID: 8300000, guid: ac576a0640869a24fa7fc61b53f2e10c, type: 3}
+  - {fileID: 8300000, guid: 2d00653bc2527dd439afe8037aa69468, type: 3}
+  - {fileID: 8300000, guid: 10439eba4ae42ea4fa737880b4e9533a, type: 3}
   playerNum: 2
   ctrlFlag: 1
+  pauseFlag: 0
+  scrollFlag: 0
   nBullet: {fileID: 100000, guid: a40255b7607b44a4b8be7ea5c60141d5, type: 2}
   cBullet: {fileID: 100002, guid: fbe70b91591cbe24f94b88b8db503999, type: 2}
   hitRenderer: {fileID: 100000, guid: f5598a1070ea20b4b9faed7316c5a2fa, type: 2}

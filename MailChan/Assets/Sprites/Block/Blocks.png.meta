@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4ddede91a7ca4f84c8208f0d728e364b
+guid: b4ce881d941707249962d382b5ad164d
 TextureImporter:
   fileIDToRecycleName:
     21300000: Blocks_0
@@ -7,7 +7,11 @@ TextureImporter:
     21300004: Blocks_2
     21300006: Blocks_3
     21300008: Blocks_4
-    21300010: Blocks_5
+    21300010: Blocks_7
+    21300012: Blocks_8
+    21300014: Blocks_9
+    21300016: Blocks_10
+    21300018: Blocks_11
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -94,16 +98,56 @@ TextureImporter:
         serializedVersion: 2
         x: 64
         y: 16
+        width: 48
+        height: 16
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Blocks_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
         width: 16
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Blocks_5
+    - name: Blocks_8
       rect:
         serializedVersion: 2
-        x: 80
-        y: 16
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Blocks_9
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Blocks_10
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Blocks_11
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
         width: 48
         height: 16
       alignment: 0

@@ -4,7 +4,7 @@ using System;
 
 public class PlayerCtrl : MonoBehaviour {
 		//固定パラメータ
-		public static float speed = 64f;			//横移動速度
+		public static float speed = 80f;			//横移動速度
 		public static float jumpForce = 256f;		//ジャンプ力
 		public static int bulletMaxNum = 3; 		//画面内の弾の最大数
 		private int maxLifePoint = 28;		//最大ライフポイント
@@ -32,6 +32,7 @@ public class PlayerCtrl : MonoBehaviour {
 		private int shotCounter = 0;		//ショットモーション制御カウンター
 		public int playerNum = 3;			//残機数(初期値）
 		private SE_TYPE chargeState;
+		private float preV;
 
 		//フラグ
 		private bool jumpFlag = false;		//ジャンプフラグ
@@ -153,7 +154,7 @@ public class PlayerCtrl : MonoBehaviour {
 												jumpFlag = true;
 										}
 										//着地
-										if (Mathf.Abs (v.y * 1000) < 1 && jumpFlag) {
+										if (Mathf.Abs (v.y * 1000) < 1 && jumpFlag && preV < 0) {
 												audio.PlayOneShot (seClip[(int)SE_TYPE.TYAKUTI]);
 												jumpFlag = false;
 										}
@@ -218,6 +219,8 @@ public class PlayerCtrl : MonoBehaviour {
 								}
 						}
 				}
+
+				preV = transform.rigidbody2D.velocity.y;
 
 				//ポーズフラグ管理
 				if (warpFlag || lifePoint <= 0 || scrollFlag) {

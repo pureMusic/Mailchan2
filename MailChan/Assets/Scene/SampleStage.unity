@@ -6560,6 +6560,34 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: e219f735c20eecd47afdbe4d81986d84, type: 2}
+      propertyPath: seClip.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: fd9da6ca81fd5ab40b6510f9a70c0ebc, type: 3}
+    - target: {fileID: 11400000, guid: e219f735c20eecd47afdbe4d81986d84, type: 2}
+      propertyPath: seClip.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 7a756011d0560e64bbe314e796dd71a2, type: 3}
+    - target: {fileID: 11400000, guid: e219f735c20eecd47afdbe4d81986d84, type: 2}
+      propertyPath: seClip.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3ca2b48ecfa25284abe8e1cde3a603ba, type: 3}
+    - target: {fileID: 11400000, guid: e219f735c20eecd47afdbe4d81986d84, type: 2}
+      propertyPath: seClip.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: a0776da33fb859b448d5d028ba32c400, type: 3}
+    - target: {fileID: 11400000, guid: e219f735c20eecd47afdbe4d81986d84, type: 2}
+      propertyPath: seClip.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: ac576a0640869a24fa7fc61b53f2e10c, type: 3}
+    - target: {fileID: 11400000, guid: e219f735c20eecd47afdbe4d81986d84, type: 2}
+      propertyPath: seClip.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 2d00653bc2527dd439afe8037aa69468, type: 3}
+    - target: {fileID: 11400000, guid: e219f735c20eecd47afdbe4d81986d84, type: 2}
+      propertyPath: seClip.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: 10439eba4ae42ea4fa737880b4e9533a, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e219f735c20eecd47afdbe4d81986d84, type: 2}
   m_RootGameObject: {fileID: 260300901}

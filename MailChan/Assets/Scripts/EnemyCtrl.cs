@@ -191,7 +191,6 @@ public class EnemyCtrl : MonoBehaviour {
 		//接触時の処理
 		void OnTriggerEnter2D(Collider2D col){
 				//ダメージ処理
-				print (col.gameObject.tag);
 				if (col.gameObject.tag == "Player") {
 						PlayerCtrl player = col.GetComponent<PlayerCtrl>();
 						player.Damage (damagePoint);

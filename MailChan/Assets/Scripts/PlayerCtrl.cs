@@ -154,7 +154,8 @@ public class PlayerCtrl : MonoBehaviour {
 												jumpFlag = true;
 										}
 										//着地
-										if (Mathf.Abs (v.y * 1000) < 1 && jumpFlag && preV < 0) {
+										//print ("v.y:" + Mathf.Abs (v.y * 1000) + " Flag:" + jumpFlag + " preV:" + preV);
+										if (Mathf.Abs (v.y * 1000) < 1 && jumpFlag && preV == 0) {
 												audio.PlayOneShot (seClip[(int)SE_TYPE.TYAKUTI]);
 												jumpFlag = false;
 										}
@@ -243,7 +244,7 @@ public class PlayerCtrl : MonoBehaviour {
 				FlagList.SetBool ("damageFlag", damageFlag);
 
 				//デバッグ---------------------------------------------------
-				//MyDebug ();
+				MyDebug ();
 
 		}
 
@@ -251,7 +252,8 @@ public class PlayerCtrl : MonoBehaviour {
 		void MyDebug(){
 				//print ("FPS:" + 1 / Time.deltaTime);
 				//Debug.Log ("jumpFlag:" + jumpFlag);
-				Debug.Log ("v:" + rigidbody2D.velocity);
+				//Debug.Log ("v:" + rigidbody2D.velocity.y + " flag:" + jumpFlag);
+
 		}
 
 		//向き判定
